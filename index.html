@@ -4,94 +4,171 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nazim Mubin | Official Links</title>
+    
+    <!-- Tailwind (Primary CSS) -->
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
+    <!-- Data Source -->
     <script src="data.js"></script>
 
     <style>
+        /* --- 1. CORE STYLES & FALLBACKS (Works even if Tailwind fails) --- */
+        :root {
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --accent-color: #4f46e5;
+        }
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: #f8fafc;
-            color: #0f172a;
-            min-height: 100vh;
+            font-family: 'Outfit', sans-serif, system-ui;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            line-height: 1.5;
+        }
+        a { text-decoration: none; color: inherit; }
+        
+        /* Layout Helpers (Backup for Tailwind Utilities) */
+        .wrapper { max-width: 48rem; margin: 0 auto; padding: 0 1rem; }
+        .flex-row { display: flex; align-items: center; justify-content: space-between; }
+        .grid-layout { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        
+        /* Responsive Grid Fallback */
+        @media (min-width: 768px) {
+            .grid-layout { grid-template-columns: 1fr 1fr; }
         }
 
-        /* The Bento Grid Card Style */
+        /* --- 2. COMPONENT STYLES --- */
+        
+        /* The Bento Card */
         .bento-card {
             background: white;
             border-radius: 24px;
             border: 1px solid #e2e8f0;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             overflow: hidden;
             position: relative;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            /* Smooth transitions */
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
+        /* Hover Effect (Only works if Tailwind loads, but structure remains) */
         .bento-card:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-5px) scale(1.01);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
             border-color: #cbd5e1;
             z-index: 10;
         }
 
-        /* Abstract patterns for placeholders */
+        /* Premium Gradient */
+        .card-premium {
+            background: linear-gradient(135deg, #ffffff 0%, #f3f4f6 100%);
+        }
+        .card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 4px;
+            background: linear-gradient(90deg, #6366f1, #ec4899);
+        }
+
+        /* Visual Patterns */
         .bg-pattern-1 { background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%); }
         .bg-pattern-2 { background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); }
-        .bg-pattern-3 { background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); }
 
-        /* Custom Scrollbar */
+        /* --- 3. LOADING ANIMATIONS --- */
+        
+        /* Initial Preloader */
+        #page-loader {
+            position: fixed;
+            inset: 0;
+            background: white;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease;
+        }
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid #e2e8f0;
+            border-top: 4px solid #6366f1;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Content Reveal Animation */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .reveal-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Hide Scrollbar */
         ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 pb-12">
 
+    <!-- LOADING OVERLAY -->
+    <div id="page-loader">
+        <div class="flex flex-col items-center gap-4">
+            <div class="spinner"></div>
+            <p class="text-slate-400 text-sm font-semibold tracking-wide animate-pulse">LOADING...</p>
+        </div>
+    </div>
+
+    <!-- HEADER -->
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 mb-8">
-        <div class="max-w-3xl mx-auto flex items-center justify-between">
+        <div class="wrapper flex-row max-w-3xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 p-[2px]">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
-                        <span id="header-initials" class="font-bold text-xs">NM</span>
+                        <span id="header-initials" class="font-bold text-xs text-slate-800">NM</span>
                     </div>
                 </div>
                 <h1 id="header-name" class="font-bold text-lg tracking-tight">Nazim Mubin</h1>
             </div>
             
             <div class="flex gap-4 text-lg text-slate-400">
-                <a id="header-yt-link" href="https://www.youtube.com/@nazimxmubin" class="hover:text-red-600 transition-colors"><i class="fa-brands fa-youtube"></i></a>
-                <a id="header-ig-link" href="https://www.instagram.com/" class="hover:text-pink-600 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a id="header-yt-link" href="#" class="smart-link hover:text-red-600 transition-colors" data-platform="youtube"><i class="fa-brands fa-youtube"></i></a>
+                <a id="header-ig-link" href="#" class="smart-link hover:text-pink-600 transition-colors" data-platform="instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
     </header>
 
-    <main class="max-w-3xl mx-auto px-4 space-y-8">
+    <main class="wrapper max-w-3xl mx-auto px-4 space-y-8">
 
-        <div class="w-full">
-            <div class="flex items-center justify-between mb-3 px-1">
+        <!-- 1. LATEST VIDEO -->
+        <div class="w-full reveal-on-scroll">
+            <div class="flex-row flex items-center justify-between mb-3 px-1">
                 <h2 class="font-bold text-xl text-slate-800">Latest Video</h2>
                 <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">LIVE NOW</span>
             </div>
             
-            <!-- Video Card with Smart Link -->
-            <div class="bento-card w-full aspect-video shadow-xl ring-4 ring-white group cursor-pointer">
-                <a id="hero-video-link" href="#" target="_blank" class="block w-full h-full relative">
-                    <!-- Thumbnail Image -->
+            <div class="bento-card w-full aspect-video shadow-xl ring-4 ring-white group cursor-pointer bg-slate-200">
+                <a id="hero-video-link" href="#" class="smart-link block w-full h-full relative" data-platform="youtube">
+                    <!-- Added bg-slate-200 as placeholder color while img loads -->
                     <img 
                         id="hero-video-thumb"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-0 transition-opacity duration-500"
                         src="" 
+                        onload="this.style.opacity='1'"
                         alt="Watch Latest Video"
                     >
-                    
-                    <!-- Overlay Play Button -->
                     <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors flex items-center justify-center">
                         <div class="w-16 h-16 bg-red-600 rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300">
                             <i class="fa-solid fa-play text-white text-2xl ml-1"></i>
                         </div>
                     </div>
-
-                    <!-- YouTube App Hint -->
                     <div class="absolute bottom-4 right-4 bg-black/60 backdrop-blur-sm text-white text-xs px-3 py-1 rounded-full flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
                         <i class="fa-brands fa-youtube"></i> Open App
                     </div>
@@ -99,55 +176,68 @@
             </div>
         </div>
 
-        <div>
+        <!-- 2. MUSIC & CONNECT GRID -->
+        <div class="reveal-on-scroll">
             <h2 class="font-bold text-xl text-slate-800 mb-4 px-1">Music & Connect</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <!-- grid-layout class added for CSS fallback -->
+            <div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <div class="bento-card p-5 flex flex-col justify-between h-64 bg-white group cursor-default relative">
+                <!-- Featured Song Card -->
+                <div class="bento-card card-premium p-5 flex flex-col justify-between h-auto min-h-[18rem] group cursor-default relative">
                     <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-20">
                         NEW SINGLE
                     </div>
                     
-                    <div class="flex items-start gap-4 z-10">
+                    <div class="flex items-start gap-4 z-10 mb-4">
                         <div class="w-20 h-20 rounded-xl bg-pattern-1 shadow-md shrink-0 flex items-center justify-center text-white/50 text-2xl">
                             <i class="fa-solid fa-music"></i>
                         </div>
                         <div>
-                            <h3 id="song-title" class="font-bold text-lg leading-tight mb-1">Aaja Heeriye</h3>
-                            <p id="song-artist" class="text-sm text-slate-500">Nazim Mubin</p>
+                            <h3 id="song-title" class="font-bold text-lg leading-tight mb-1">Loading...</h3>
+                            <p id="song-artist" class="text-sm text-slate-500">...</p>
                             <p id="song-status" class="text-xs text-indigo-500 mt-2 font-medium">Out Now</p>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-2 gap-2 mt-4 z-10">
-                        <a id="btn-apple" href="#" target="_blank" 
-                           class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-pink-50 text-slate-700 hover:text-pink-600 py-3 rounded-xl transition-colors border border-slate-200">
-                            <i class="fa-brands fa-apple text-lg"></i>
-                            <span class="text-sm font-semibold">Apple</span>
+                    <!-- Buttons -->
+                    <div class="grid grid-cols-1 gap-2 mt-auto z-10">
+                        <a id="btn-spotify" href="#" class="smart-link flex items-center justify-between px-4 py-3 bg-[#1DB954]/10 hover:bg-[#1DB954] text-[#1DB954] hover:text-white rounded-xl transition-all border border-[#1DB954]/20" data-platform="spotify">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-brands fa-spotify text-xl"></i>
+                                <span class="text-sm font-bold">Spotify</span>
+                            </div>
+                            <i class="fa-solid fa-arrow-right opacity-60 text-xs"></i>
                         </a>
-                        <a id="btn-ytmusic" href="#" target="_blank" 
-                           class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-red-600 py-3 rounded-xl transition-colors border border-slate-200">
-                            <i class="fa-solid fa-circle-play text-lg"></i>
-                            <span class="text-sm font-semibold">YT Music</span>
-                        </a>
+                        
+                        <div class="grid grid-cols-2 gap-2">
+                            <a id="btn-apple" href="#" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-pink-50 text-slate-700 hover:text-pink-600 py-3 rounded-xl transition-colors border border-slate-200">
+                                <i class="fa-brands fa-apple text-lg"></i>
+                                <span class="text-xs font-semibold">Apple</span>
+                            </a>
+                            <a id="btn-ytmusic" href="#" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-red-600 py-3 rounded-xl transition-colors border border-slate-200">
+                                <i class="fa-solid fa-circle-play text-lg"></i>
+                                <span class="text-xs font-semibold">YT Music</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
-                <div class="bento-card p-0 h-64 relative overflow-hidden group">
+                <!-- Popular Track Embed -->
+                <div class="bento-card p-0 h-64 md:h-auto min-h-[18rem] relative overflow-hidden group bg-slate-100">
                     <div class="absolute inset-0 bg-pattern-2 opacity-30"></div>
                     <div class="relative z-10 h-full flex flex-col p-5">
                         <div class="flex-1">
                             <h3 class="font-bold text-lg text-slate-800">Popular Track</h3>
                             <p class="text-sm text-slate-500">Listen on Spotify</p>
                         </div>
-                        <div class="w-full rounded-xl overflow-hidden shadow-sm mt-auto">
+                        <div class="w-full rounded-xl overflow-hidden shadow-sm mt-auto bg-slate-200 h-[152px]">
                             <iframe 
                                 id="spotify-embed-frame"
                                 style="border-radius:12px" 
                                 src="" 
                                 width="100%" 
-                                height="100" 
+                                height="152" 
                                 frameBorder="0" 
                                 allowfullscreen="" 
                                 allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
@@ -157,7 +247,8 @@
                     </div>
                 </div>
 
-                <a id="spotify-profile-link" href="#" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-[#1DB954] text-white transition-colors border-none hover:bg-[#1ed760]">
+                <!-- Spotify Follow -->
+                <a id="spotify-profile-link" href="#" class="smart-link bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-[#1DB954] text-white transition-colors border-none hover:bg-[#1ed760]" data-platform="spotify">
                     <div class="w-16 h-16 rounded-full bg-black/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-brands fa-spotify text-3xl"></i>
                     </div>
@@ -165,7 +256,8 @@
                     <p class="text-white/80 text-sm mt-2">Stream my full discography & get updates</p>
                 </a>
 
-                <a id="youtube-subscribe-link" href="#" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-slate-900 text-white hover:bg-[#FF0000] transition-colors border-none">
+                <!-- Youtube Subscribe -->
+                <a id="youtube-subscribe-link" href="#" class="smart-link bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-slate-900 text-white hover:bg-[#FF0000] transition-colors border-none" data-platform="youtube">
                     <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-brands fa-youtube text-3xl"></i>
                     </div>
@@ -176,7 +268,8 @@
             </div>
         </div>
 
-        <div class="w-full bg-white rounded-3xl border border-e2e8f0 p-6 md:p-8 shadow-sm">
+        <!-- 3. INTRO / BIO -->
+        <div class="w-full bg-white rounded-3xl border border-e2e8f0 p-6 md:p-8 shadow-sm reveal-on-scroll">
             <h2 class="font-bold text-xl text-slate-800 mb-6">About <span id="bio-header-name">Us</span></h2>
             
             <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
@@ -188,13 +281,8 @@
                 </div>
                 
                 <div class="flex-1 text-center md:text-left space-y-4">
-                    <p id="bio-text-1" class="text-slate-600 leading-relaxed">
-                        <!-- Bio Paragraph 1 -->
-                    </p>
-                    <p id="bio-text-2" class="text-slate-600 leading-relaxed hidden md:block">
-                        <!-- Bio Paragraph 2 -->
-                    </p>
-                    
+                    <p id="bio-text-1" class="text-slate-600 leading-relaxed"></p>
+                    <p id="bio-text-2" class="text-slate-600 leading-relaxed hidden md:block"></p>
                     <div class="pt-2">
                         <span id="bio-signature" class="font-handwriting text-indigo-500 font-semibold text-lg italic">~ Nazim Mubin</span>
                     </div>
@@ -202,112 +290,149 @@
             </div>
         </div>
 
-        <footer class="py-8 text-center border-t border-slate-200 mt-8">
+        <footer class="py-8 text-center border-t border-slate-200 mt-8 reveal-on-scroll">
             <p id="footer-text" class="text-slate-400 text-sm">© 2025 Nazim Mubin. All rights reserved.</p>
         </footer>
 
     </main>
 
     <script>
-        const observerOptions = { threshold: 0.1 };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.bento-card, .bg-white.rounded-3xl').forEach((el, index) => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
-            observer.observe(el);
-        });
-    </script>
-
-    <script>
         document.addEventListener("DOMContentLoaded", function() {
-            // Check if siteData exists (from data.js)
+            
+            // 1. Remove Loader Animation
+            const loader = document.getElementById('page-loader');
+            if(loader) {
+                // Short delay to ensure JS has processed data
+                setTimeout(() => {
+                    loader.style.opacity = '0';
+                    setTimeout(() => { loader.style.display = 'none'; }, 500);
+                    triggerAnimations();
+                }, 800);
+            }
+
+            // 2. Trigger Entry Animations
+            function triggerAnimations() {
+                const observerOptions = { threshold: 0.1 };
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('reveal-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+
+                document.querySelectorAll('.reveal-on-scroll').forEach((el, index) => {
+                    // Stagger the animation
+                    el.style.transitionDelay = `${index * 0.1}s`;
+                    observer.observe(el);
+                });
+            }
+
+            // 3. Populate Data
             if (typeof siteData !== 'undefined') {
-                
-                // --- PROFILE INFO ---
+                // Profile
                 document.getElementById('header-initials').textContent = siteData.profile.initials;
                 document.getElementById('header-name').textContent = siteData.profile.name;
                 document.getElementById('song-artist').textContent = siteData.profile.name;
                 document.getElementById('bio-header-name').textContent = siteData.profile.name.split(" ")[0]; 
                 document.getElementById('bio-signature').textContent = "~ " + siteData.profile.name;
                 document.getElementById('footer-text').textContent = "© 2025 " + siteData.profile.name + ". All rights reserved.";
-                
-                // document.getElementById('bio-image').src = siteData.profile.image;
-                
-                // Bio Paragraphs
+                document.getElementById('bio-image').src = siteData.profile.image;
                 document.getElementById('bio-text-1').textContent = siteData.profile.bio_p1;
                 document.getElementById('bio-text-2').textContent = siteData.profile.bio_p2;
 
-                // --- LINKS ---
+                // Socials
                 document.getElementById('header-yt-link').href = siteData.socials.youtube;
                 document.getElementById('header-ig-link').href = siteData.socials.instagram;
                 document.getElementById('youtube-subscribe-link').href = siteData.socials.youtube;
                 document.getElementById('spotify-profile-link').href = siteData.socials.spotify;
 
-                // --- SMART VIDEO LINK LOGIC (Fix for Instagram In-App Browser) ---
+                // Video
                 if(siteData.latest_video && siteData.latest_video.url) {
                     const embedUrl = siteData.latest_video.url;
                     let videoId = "";
+                    if (embedUrl.includes("embed/")) videoId = embedUrl.split("embed/")[1].split("?")[0];
                     
-                    if (embedUrl.includes("embed/")) {
-                        videoId = embedUrl.split("embed/")[1].split("?")[0];
-                    }
-
                     if (videoId) {
-                        const linkElement = document.getElementById('hero-video-link');
                         const webUrl = `https://www.youtube.com/watch?v=${videoId}`;
-                        
-                        // Default fallback
-                        linkElement.href = webUrl;
+                        document.getElementById('hero-video-link').href = webUrl;
                         document.getElementById('hero-video-thumb').src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
-
-                        // Add click listener to force app open
-                        linkElement.onclick = function(e) {
-                            const ua = navigator.userAgent.toLowerCase();
-                            const isAndroid = ua.indexOf("android") > -1;
-                            const isIos = ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1;
-
-                            if (isAndroid) {
-                                // Prevent standard link click
-                                e.preventDefault();
-                                // Android "Intent" URL. This tells the phone: "Use the YouTube App explicitly"
-                                const intentUrl = `intent://www.youtube.com/watch?v=${videoId}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodeURIComponent(webUrl)};end`;
-                                window.location.href = intentUrl;
-                            } 
-                            else if (isIos) {
-                                // iOS Deep Link attempt
-                                e.preventDefault();
-                                window.location.href = `youtube://watch?v=${videoId}`;
-                                
-                                // Fallback to web if app not installed (standard iOS trick)
-                                setTimeout(() => {
-                                    window.location.href = webUrl;
-                                }, 500);
-                            }
-                            // Desktop will just use the default href (webUrl) in new tab
-                        };
                     }
                 }
                 
-                // Featured Song
+                // Song
                 document.getElementById('song-title').textContent = siteData.featured_song.title;
                 document.getElementById('song-status').textContent = siteData.featured_song.status;
                 document.getElementById('btn-apple').href = siteData.featured_song.apple_link;
                 document.getElementById('btn-ytmusic').href = siteData.featured_song.yt_music_link;
+                const spotifySingleLink = siteData.featured_song.spotify_link || siteData.socials.spotify;
+                document.getElementById('btn-spotify').href = spotifySingleLink;
 
-                // Popular Track Embed
+                // Spotify Embed
                 document.getElementById('spotify-embed-frame').src = siteData.popular_track.spotify_embed;
-            } else {
-                console.log("data.js not loaded. Using default static HTML content.");
             }
+
+            // 4. Smart Deep Linking Engine
+            function openDeepLink(e, url, platform) {
+                const ua = navigator.userAgent.toLowerCase();
+                const isAndroid = ua.indexOf("android") > -1;
+                const isIos = ua.indexOf("iphone") > -1 || ua.indexOf("ipad") > -1;
+
+                if (!isAndroid && !isIos) return; 
+
+                e.preventDefault();
+
+                let intentUrl = "";
+                let schemeUrl = "";
+                
+                if (platform === 'youtube') {
+                    let videoId = "";
+                    if (url.includes('v=')) videoId = url.split('v=')[1].split('&')[0];
+                    else if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0];
+                    
+                    if (videoId) {
+                        schemeUrl = `youtube://watch?v=${videoId}`;
+                        intentUrl = `intent://www.youtube.com/watch?v=${videoId}#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+                    } else {
+                        schemeUrl = `youtube://`;
+                        intentUrl = `intent://www.youtube.com#Intent;scheme=https;package=com.google.android.youtube;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+                    }
+                } 
+                else if (platform === 'spotify') {
+                    // Extract ID
+                    const parts = url.split('spotify.com/')[1].split('?')[0].split('/');
+                    const type = parts[0]; 
+                    const id = parts[1];
+                    schemeUrl = `spotify:${type}:${id}`;
+                    intentUrl = `intent://${url.replace('https://', '')}#Intent;scheme=https;package=com.spotify.music;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+                }
+                else if (platform === 'instagram') {
+                    let username = "";
+                    const parts = url.split('instagram.com/')[1].split('/');
+                    if(parts.length > 0) username = parts[0];
+                    schemeUrl = `instagram://user?username=${username}`;
+                    intentUrl = `intent://instagram.com/_u/${username}/#Intent;package=com.instagram.android;scheme=https;S.browser_fallback_url=${encodeURIComponent(url)};end`;
+                }
+
+                if (isAndroid) {
+                    window.location.href = intentUrl;
+                } else if (isIos) {
+                    window.location.href = schemeUrl;
+                    setTimeout(() => { window.location.href = url; }, 1000);
+                }
+            }
+
+            document.body.addEventListener('click', function(e) {
+                const target = e.target.closest('.smart-link');
+                if (target) {
+                    const platform = target.dataset.platform;
+                    const url = target.href;
+                    if(platform && url && url !== '#') {
+                        openDeepLink(e, url, platform);
+                    }
+                }
+            });
         });
     </script>
 </body>
