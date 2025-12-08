@@ -3,296 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Control | Nazim Mubin</title>
-    
-    <!-- Libraries -->
+    <title>Admin Control Panel | Nazim Mubin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    
+    <script src="data.js"></script>
 
-    <!-- Firebase SDKs -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <style>
+        body { font-family: sans-serif; background-color: #f1f5f9; }
+        .input-group { margin-bottom: 1.5rem; }
+        .input-label { display: block; font-size: 0.875rem; font-weight: 600; color: #475569; margin-bottom: 0.5rem; }
+        .input-field { width: 100%; padding: 0.75rem; border: 1px solid #cbd5e1; border-radius: 0.5rem; outline: none; transition: border-color 0.2s; }
+        .input-field:focus { border-color: #6366f1; ring: 2px; }
+        .section-card { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); margin-bottom: 2rem; }
+    </style>
+</head>
+<body class="pb-20">
 
-        const firebaseConfig = JSON.parse(localStorage.getItem('firebase_config_override') || JSON.stringify({
-             apiKey: "AIzaSy...",
-             authDomain: "project.firebaseapp.com",
-             projectId: "project",
-        }));
-        
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'nazim-music-app';
-        const activeConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : firebaseConfig;
+    <div class="bg-indigo-600 text-white py-6 px-6 shadow-lg sticky top-0 z-50">
+        <div class="max-w-4xl mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold"><i class="fa-solid fa-sliders mr-2"></i> Site Control Panel</h1>
+            <div class="text-xs bg-indigo-500 px-3 py-1 rounded-full">v2.0 Connected</div>
+        </div>
+    </div>
 
-        const app = initializeApp(activeConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+    <div class="max-w-4xl mx-auto mt-8 px-4">
+        <form id="controlForm">
+            
+            <div class="section-card">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-4 mb-6"><i class="fa-regular fa-id-card mr-2 text-indigo-500"></i> Identity & Bio</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="input-group">
+                        <label class="input-label">Display Name</label>
+                        <input type="text" id="p_name" class="input-field" placeholder="Nazim Mubin">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label">Initials (Logo)</label>
+                        <input type="text" id="p_initials" class="input-field" placeholder="NM">
+                    </div>
+                </div>
 
-        let currentUser = null;
-        let currentData = null;
+                <div class="input-group">
+                    <label class="input-label">Profile Image URL</label>
+                    <input type="text" id="p_image" class="input-field text-sm font-mono text-slate-500 bg-slate-50">
+                    <p class="text-xs text-slate-400 mt-1">Tip: Use a direct image link (ending in .jpg or .png)</p>
+                </div>
 
-        async function init() {
-            await signInAnonymously(auth);
-            onAuthStateChanged(auth, (user) => {
-                if (user) {
-                    currentUser = user;
-                    loadCurrentData();
-                }
-            });
-        }
+                <div class="input-group">
+                    <label class="input-label">Bio Paragraph 1 (Intro)</label>
+                    <textarea id="p_bio1" rows="3" class="input-field"></textarea>
+                </div>
 
-        window.checkPassword = function() {
-            const pass = document.getElementById('password-input').value;
-            if(pass === "nazim123") {
-                document.getElementById('login-screen').classList.add('hidden');
-                document.getElementById('dashboard').classList.remove('hidden');
+                <div class="input-group">
+                    <label class="input-label">Bio Paragraph 2 (Details)</label>
+                    <textarea id="p_bio2" rows="3" class="input-field"></textarea>
+                </div>
+            </div>
+
+            <div class="section-card">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-4 mb-6"><i class="fa-solid fa-share-nodes mr-2 text-indigo-500"></i> Social Links</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="input-group">
+                        <label class="input-label"><i class="fa-brands fa-youtube text-red-500"></i> YouTube Channel</label>
+                        <input type="text" id="s_youtube" class="input-field">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label"><i class="fa-brands fa-instagram text-pink-500"></i> Instagram Profile</label>
+                        <input type="text" id="s_instagram" class="input-field">
+                    </div>
+                    <div class="input-group">
+                        <label class="input-label"><i class="fa-brands fa-spotify text-green-500"></i> Spotify Profile</label>
+                        <input type="text" id="s_spotify" class="input-field">
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-card border-l-4 border-indigo-500">
+                <h2 class="text-xl font-bold text-slate-800 border-b pb-4 mb-6"><i class="fa-solid fa-star mr-2 text-indigo-500"></i> Main Content</h2>
+                
+                <div class="mb-8">
+                    <h3 class="font-bold text-slate-700 mb-4 bg-slate-100 p-2 rounded">Latest YouTube Video</h3>
+                    <div class="input-group">
+                        <label class="input-label">Embed URL (Not Watch URL)</label>
+                        <input type="text" id="v_url" class="input-field font-mono text-sm">
+                        <p class="text-xs text-red-400 mt-1">Example: https://www.youtube.com/embed/VIDEO_ID</p>
+                    </div>
+                </div>
+
+                <div class="mb-8">
+                    <h3 class="font-bold text-slate-700 mb-4 bg-slate-100 p-2 rounded">New Single Details</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="input-label">Song Title</label>
+                            <input type="text" id="song_title" class="input-field">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">Status Label</label>
+                            <input type="text" id="song_status" class="input-field" placeholder="Out Now">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="input-group">
+                            <label class="input-label">Apple Music Link</label>
+                            <input type="text" id="song_apple" class="input-field">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label">YT Music Link</label>
+                            <input type="text" id="song_yt" class="input-field">
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="font-bold text-slate-700 mb-4 bg-slate-100 p-2 rounded">Popular Track (Spotify Embed)</h3>
+                    <div class="input-group">
+                        <label class="input-label">Spotify Embed Src URL</label>
+                        <input type="text" id="pop_embed" class="input-field font-mono text-sm">
+                    </div>
+                </div>
+            </div>
+
+            <div class="fixed bottom-0 left-0 w-full bg-white border-t p-4 flex justify-end items-center shadow-lg z-50">
+                <span class="text-sm text-slate-500 mr-4">Clicking save downloads 'data.js'</span>
+                <button type="button" onclick="generateFile()" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-8 rounded-xl shadow-lg transform active:scale-95 transition-all flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Generate Update
+                </button>
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+        // 1. LOAD: Read data.js and fill inputs
+        window.onload = function() {
+            if(typeof siteData !== 'undefined') {
+                // Identity
+                document.getElementById('p_name').value = siteData.profile.name;
+                document.getElementById('p_initials').value = siteData.profile.initials;
+                document.getElementById('p_image').value = siteData.profile.image;
+                document.getElementById('p_bio1').value = siteData.profile.bio_p1;
+                document.getElementById('p_bio2').value = siteData.profile.bio_p2;
+
+                // Socials
+                document.getElementById('s_youtube').value = siteData.socials.youtube;
+                document.getElementById('s_instagram').value = siteData.socials.instagram;
+                document.getElementById('s_spotify').value = siteData.socials.spotify;
+
+                // Content
+                document.getElementById('v_url').value = siteData.latest_video.url;
+                
+                document.getElementById('song_title').value = siteData.featured_song.title;
+                document.getElementById('song_status').value = siteData.featured_song.status;
+                document.getElementById('song_apple').value = siteData.featured_song.apple_link;
+                document.getElementById('song_yt').value = siteData.featured_song.yt_music_link;
+
+                document.getElementById('pop_embed').value = siteData.popular_track.spotify_embed;
             } else {
-                alert("Wrong password!");
-            }
-        }
-
-        async function loadCurrentData() {
-            const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_content');
-            const docSnap = await getDoc(docRef);
-            
-            if (docSnap.exists()) {
-                currentData = docSnap.data();
-                fillForm(currentData);
-            }
-        }
-
-        function fillForm(data) {
-            // New Release
-            document.getElementById('inp-nr-title').value = data.newRelease?.title || "";
-            document.getElementById('inp-nr-type').value = data.newRelease?.type || "";
-            document.getElementById('inp-nr-apple').value = data.newRelease?.appleLink || "";
-            document.getElementById('inp-nr-ytmusic').value = data.newRelease?.ytMusicLink || "";
-            document.getElementById('inp-nr-spotify').value = data.newRelease?.spotifyId || ""; // New Field
-
-            // Past Hits
-            document.getElementById('inp-sp-track').value = data.spotifyTrackId || "";
-            
-            // Latest Video
-            document.getElementById('inp-yt-video').value = data.youtubeVideoId || "";
-
-            // Static / Profile (Hidden by default)
-            document.getElementById('inp-sp-artist').value = data.spotifyArtistId || "";
-            document.getElementById('inp-bio-text').value = data.bio?.text || "";
-            document.getElementById('inp-bio-img').value = data.bio?.imageUrl || "";
-            document.getElementById('inp-yt-channel').value = data.youtubeChannel || "";
-        }
-
-        // --- THE MAGIC LOGIC ---
-        window.shiftRelease = function() {
-            // 1. Get current "New Release" Spotify ID
-            const currentNewId = document.getElementById('inp-nr-spotify').value;
-            
-            if(!currentNewId) {
-                alert("Please add a Spotify ID to the New Release first!");
-                return;
-            }
-
-            // 2. Move it to "Past Hits"
-            document.getElementById('inp-sp-track').value = currentNewId;
-
-            // 3. Clear "New Release" fields for fresh input
-            document.getElementById('inp-nr-title').value = "";
-            document.getElementById('inp-nr-apple').value = "";
-            document.getElementById('inp-nr-ytmusic').value = "";
-            document.getElementById('inp-nr-spotify').value = "";
-            
-            // 4. Visual Feedback
-            const btn = document.getElementById('shift-btn');
-            btn.innerHTML = '<i class="fa-solid fa-check mr-2"></i>Moved!';
-            setTimeout(() => {
-                btn.innerHTML = '<i class="fa-solid fa-arrow-down mr-2"></i>Move to History';
-            }, 1500);
-        }
-
-        window.toggleProfileSettings = function() {
-            const el = document.getElementById('profile-settings');
-            el.classList.toggle('hidden');
-        }
-
-        window.saveChanges = async function() {
-            const btn = document.getElementById('save-btn');
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
-            btn.disabled = true;
-            
-            const newData = {
-                youtubeVideoId: document.getElementById('inp-yt-video').value,
-                newRelease: {
-                    title: document.getElementById('inp-nr-title').value,
-                    type: document.getElementById('inp-nr-type').value,
-                    appleLink: document.getElementById('inp-nr-apple').value,
-                    ytMusicLink: document.getElementById('inp-nr-ytmusic').value,
-                    spotifyId: document.getElementById('inp-nr-spotify').value, // Saving this for future shifts
-                },
-                spotifyTrackId: document.getElementById('inp-sp-track').value,
-                spotifyArtistId: document.getElementById('inp-sp-artist').value,
-                youtubeChannel: document.getElementById('inp-yt-channel').value,
-                bio: {
-                    text: document.getElementById('inp-bio-text').value,
-                    imageUrl: document.getElementById('inp-bio-img').value
-                }
-            };
-
-            try {
-                const docRef = doc(db, 'artifacts', appId, 'public', 'data', 'site_content');
-                await setDoc(docRef, newData);
-                
-                btn.innerHTML = '<i class="fa-solid fa-check"></i> Saved!';
-                btn.classList.add('bg-green-600', 'hover:bg-green-700');
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.classList.remove('bg-green-600', 'hover:bg-green-700');
-                    btn.disabled = false;
-                }, 2000);
-            } catch (e) {
-                console.error(e);
-                alert("Error saving data: " + e.message);
-                btn.innerHTML = originalText;
-                btn.disabled = false;
+                alert("Could not load data.js! Ensure it is in the same folder.");
             }
         };
 
-        init();
-    </script>
-
-    <style>
-        body { font-family: 'Outfit', sans-serif; }
-    </style>
-</head>
-<body class="bg-slate-900 text-slate-100 min-h-screen">
-
-    <!-- LOGIN SCREEN -->
-    <div id="login-screen" class="fixed inset-0 z-50 bg-slate-900 flex flex-col items-center justify-center p-4">
-        <div class="w-full max-w-sm bg-slate-800 p-8 rounded-2xl border border-slate-700 shadow-2xl">
-            <div class="text-center mb-6">
-                <div class="w-16 h-16 bg-indigo-500 rounded-full mx-auto mb-4 flex items-center justify-center">
-                    <i class="fa-solid fa-lock text-2xl text-white"></i>
-                </div>
-                <h1 class="text-2xl font-bold">Admin Access</h1>
-                <p class="text-slate-400 text-sm">Nazim Mubin Official</p>
-            </div>
-            <input type="password" id="password-input" placeholder="Enter Password" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-xl mb-4 text-center focus:border-indigo-500 focus:outline-none transition-colors">
-            <button onclick="checkPassword()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 rounded-xl transition-colors">
-                Unlock Panel
-            </button>
-        </div>
-    </div>
-
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="hidden max-w-2xl mx-auto p-4 md:p-8 pb-32">
-        <div class="flex items-center justify-between mb-8">
-            <h1 class="text-3xl font-bold">Control Panel</h1>
-            <a href="index.html" target="_blank" class="text-indigo-400 hover:text-indigo-300 text-sm font-semibold">
-                Live Site <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
-            </a>
-        </div>
-
-        <div class="space-y-6">
+        // 2. SAVE: Create new data.js file
+        function generateFile() {
+            const pass = prompt("Enter Admin Password to download updates:");
             
-            <!-- 1. New Release (Primary Action) -->
-            <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl relative overflow-hidden">
-                <div class="absolute top-0 right-0 bg-indigo-600 px-3 py-1 rounded-bl-xl text-xs font-bold uppercase">Step 1</div>
-                <h3 class="font-bold text-xl text-white mb-4"><i class="fa-solid fa-star mr-2 text-yellow-400"></i>New Release</h3>
+            if(pass === "nazim123") {
+                // Construct object
+                const newData = {
+                    profile: {
+                        name: document.getElementById('p_name').value,
+                        initials: document.getElementById('p_initials').value,
+                        image: document.getElementById('p_image').value,
+                        bio_p1: document.getElementById('p_bio1').value,
+                        bio_p2: document.getElementById('p_bio2').value
+                    },
+                    socials: {
+                        youtube: document.getElementById('s_youtube').value,
+                        instagram: document.getElementById('s_instagram').value,
+                        spotify: document.getElementById('s_spotify').value
+                    },
+                    latest_video: {
+                        url: document.getElementById('v_url').value
+                    },
+                    featured_song: {
+                        title: document.getElementById('song_title').value,
+                        status: document.getElementById('song_status').value,
+                        apple_link: document.getElementById('song_apple').value,
+                        yt_music_link: document.getElementById('song_yt').value
+                    },
+                    popular_track: {
+                        spotify_embed: document.getElementById('pop_embed').value
+                    }
+                };
+
+                // Create File content
+                const fileContent = "const siteData = " + JSON.stringify(newData, null, 4) + ";";
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-400 uppercase">Title</label>
-                        <input id="inp-nr-title" type="text" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg focus:border-indigo-500 outline-none">
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-xs font-bold text-slate-400 uppercase">Badge (e.g. New Single)</label>
-                        <input id="inp-nr-type" type="text" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg focus:border-indigo-500 outline-none">
-                    </div>
-                </div>
-
-                <!-- Links -->
-                <div class="space-y-3">
-                    <div class="grid grid-cols-1 gap-2">
-                         <input id="inp-nr-apple" type="text" placeholder="Apple Music Link" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg focus:border-indigo-500 outline-none text-sm">
-                         <input id="inp-nr-ytmusic" type="text" placeholder="YouTube Music Link" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg focus:border-indigo-500 outline-none text-sm">
-                    </div>
-                    
-                    <div class="bg-slate-700/30 p-3 rounded-xl border border-dashed border-slate-600">
-                        <label class="block text-[10px] font-bold text-green-400 uppercase mb-1">Important for History Logic</label>
-                        <input id="inp-nr-spotify" type="text" placeholder="Spotify Track ID (e.g. 0VPdtAOwfk...)" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg focus:border-green-500 outline-none font-mono text-sm">
-                    </div>
-                </div>
-            </div>
-
-            <!-- ACTION: SHIFT DOWN -->
-            <div class="flex justify-center">
-                <button id="shift-btn" onclick="shiftRelease()" class="bg-slate-700 hover:bg-slate-600 text-slate-300 px-6 py-2 rounded-full text-sm font-bold transition-all border border-slate-600 flex items-center">
-                    <i class="fa-solid fa-arrow-down mr-2"></i> Move Current Release to History
-                </button>
-            </div>
-
-            <!-- 2. Past Hits / History -->
-            <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl relative">
-                <div class="absolute top-0 right-0 bg-slate-600 px-3 py-1 rounded-bl-xl text-xs font-bold uppercase">Step 2</div>
-                <h3 class="font-bold text-xl text-white mb-4"><i class="fa-solid fa-history mr-2 text-slate-400"></i>Past Hits</h3>
+                // Trigger Download
+                const blob = new Blob([fileContent], { type: "text/javascript" });
+                const link = document.createElement("a");
+                link.href = URL.createObjectURL(blob);
+                link.download = "data.js";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
                 
-                <div class="space-y-2">
-                    <label class="text-xs font-bold text-slate-400 uppercase">Spotify Track ID</label>
-                    <input id="inp-sp-track" type="text" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-lg font-mono text-sm focus:border-green-500 outline-none">
-                    <p class="text-[10px] text-slate-500">This updates the 'Popular Track' player automatically when you use the button above.</p>
-                </div>
-            </div>
-
-            <!-- 3. Latest Video -->
-            <div class="bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl">
-                 <h3 class="font-bold text-xl text-white mb-4"><i class="fa-brands fa-youtube mr-2 text-red-500"></i>Latest Video</h3>
-                 <div class="flex gap-2">
-                    <div class="p-3 bg-slate-900 rounded-l-lg border-y border-l border-slate-700 text-slate-500 text-sm">v=</div>
-                    <input id="inp-yt-video" type="text" class="w-full p-3 bg-slate-900 border border-slate-700 rounded-r-lg font-mono text-white focus:border-indigo-500 outline-none" placeholder="8teszBXo9zg">
-                </div>
-            </div>
-
-            <!-- TOGGLE: Static Settings -->
-            <div class="text-center">
-                <button onclick="toggleProfileSettings()" class="text-slate-500 hover:text-white text-sm font-semibold underline decoration-dashed underline-offset-4">
-                    Edit Profile & Static Links
-                </button>
-            </div>
-
-            <!-- 4. Profile Settings (Hidden) -->
-            <div id="profile-settings" class="hidden bg-slate-800 p-6 rounded-3xl border border-slate-700 shadow-xl animate-fade-in">
-                <h3 class="font-bold text-lg text-white mb-4">Static Profile Data</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase">YouTube Channel URL</label>
-                        <input id="inp-yt-channel" type="text" class="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase">Spotify Artist ID</label>
-                        <input id="inp-sp-artist" type="text" class="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-sm">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase">Bio Text</label>
-                        <textarea id="inp-bio-text" rows="3" class="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-sm"></textarea>
-                    </div>
-                     <div>
-                        <label class="block text-xs font-bold text-slate-400 uppercase">Image URL</label>
-                        <input id="inp-bio-img" type="text" class="w-full p-2 bg-slate-900 border border-slate-700 rounded-lg text-sm">
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- Sticky Save Button -->
-        <div class="fixed bottom-6 left-0 right-0 px-4 md:px-0 flex justify-center z-40">
-            <button id="save-btn" onclick="saveChanges()" class="w-full max-w-lg bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-4 rounded-2xl transition-all shadow-xl shadow-indigo-900/50 transform hover:scale-[1.02] border-2 border-indigo-400/20 backdrop-blur-md">
-                Save All Changes
-            </button>
-        </div>
-
-    </div>
+                alert("New 'data.js' downloaded! \n\nNOW: Replace the old file in your GitHub folder with this new one.");
+            } else {
+                alert("Wrong password.");
+            }
+        }
+    </script>
 </body>
 </html>
