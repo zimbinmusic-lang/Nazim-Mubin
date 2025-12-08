@@ -153,7 +153,7 @@
             bottom: 50px;
         }
 
-        /* --- 4. VIBE ANIMATION PARTICLES --- */
+        /* --- 4. ADVANCED VIBE PHYSICS --- */
         #vibe-animation-layer {
             position: fixed;
             inset: 0;
@@ -162,38 +162,64 @@
             overflow: hidden;
         }
 
-        /* Flash (Energy) */
-        @keyframes flashAnim { 0% { opacity: 0; } 50% { opacity: 0.6; background: white; } 100% { opacity: 0; } }
-        .anim-flash { animation: flashAnim 0.5s ease-out forwards; }
-
-        /* Hearts (Romance) */
-        @keyframes floatUp { 
-            0% { transform: translateY(110vh) scale(0.5); opacity: 0; } 
-            20% { opacity: 0.8; } 
-            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } 
+        /* Energy: Rising Sparks */
+        @keyframes riseUpWiggle {
+            0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translateY(50vh) translateX(10px) scale(1); }
+            100% { transform: translateY(-10vh) translateX(-10px) scale(0.2); opacity: 0; }
         }
-        .anim-heart { position: absolute; color: #fb7185; animation: floatUp 3s ease-out forwards; }
-
-        /* Leaves (Nature) */
-        @keyframes fallDown { 
-            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; } 
-            20% { opacity: 1; } 
-            100% { transform: translateY(110vh) rotate(360deg) translateX(20px); opacity: 0; } 
+        .anim-ember {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #f97316;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #f97316, 0 0 20px #fbbf24;
+            animation: riseUpWiggle ease-out forwards;
         }
-        .anim-leaf { position: absolute; color: #4ade80; animation: fallDown 3s linear forwards; }
 
-        /* Wind/Breeze (Chill) */
-        @keyframes driftRight { 
-            0% { transform: translateX(-100vw); opacity: 0; } 
-            20% { opacity: 0.4; } 
-            100% { transform: translateX(100vw); opacity: 0; } 
+        /* Romance: Swaying Balloons/Hearts */
+        @keyframes floatSway {
+            0% { transform: translateY(110vh) translateX(0) rotate(0deg) scale(0.5); opacity: 0; }
+            10% { opacity: 0.9; }
+            25% { transform: translateY(80vh) translateX(15px) rotate(5deg); }
+            50% { transform: translateY(50vh) translateX(-15px) rotate(-5deg); }
+            75% { transform: translateY(20vh) translateX(10px) rotate(3deg); }
+            100% { transform: translateY(-20vh) translateX(0) rotate(0deg) scale(1.1); opacity: 0; }
         }
-        .anim-wind { 
-            position: absolute; 
-            height: 1px; 
-            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent); 
-            width: 150px; 
-            animation: driftRight 2s ease-in-out forwards; 
+        .anim-heart {
+            position: absolute;
+            color: #f43f5e;
+            animation: floatSway linear forwards;
+            filter: drop-shadow(0 4px 6px rgba(244, 63, 94, 0.3));
+        }
+
+        /* Nature: Tumbling Leaves */
+        @keyframes leafFallTumble {
+            0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(110vh) translateX(40px) rotate(360deg); opacity: 0; }
+        }
+        .anim-leaf {
+            position: absolute;
+            color: #22c55e;
+            animation: leafFallTumble linear forwards;
+        }
+
+        /* Chill: Drifting Mist */
+        @keyframes mistDrift {
+            0% { transform: translateX(-20vw); opacity: 0; }
+            20% { opacity: 0.4; }
+            80% { opacity: 0.4; }
+            100% { transform: translateX(120vw); opacity: 0; }
+        }
+        .anim-mist {
+            position: absolute;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            animation: mistDrift linear forwards;
         }
 
         ::-webkit-scrollbar { width: 0px; }
@@ -280,7 +306,6 @@
                         <span id="header-initials" class="font-bold text-xs text-slate-800">NM</span>
                     </div>
                 </div>
-                <!-- CHANGED: Hidden on mobile (hidden), shown on desktop (md:block) -->
                 <h1 id="header-name" class="font-bold text-lg tracking-tight hidden md:block">Nazim Mubin</h1>
             </div>
             
@@ -309,7 +334,6 @@
         <div class="w-full reveal-on-scroll">
             <div class="flex-row flex items-center justify-between mb-3 px-1">
                 <h2 class="font-bold text-xl text-slate-800">Latest Video</h2>
-                <!-- CHANGED: Updated text from LIVE NOW to NEW RELEASE -->
                 <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">NEW RELEASE</span>
             </div>
             
@@ -548,45 +572,51 @@
             container.innerHTML = ''; // Clear previous
 
             if (name === 'Energy') {
-                const flash = document.createElement('div');
-                flash.className = 'absolute inset-0 anim-flash';
-                container.appendChild(flash);
+                for(let i=0; i<30; i++) {
+                    const ember = document.createElement('div');
+                    ember.className = 'anim-ember';
+                    ember.style.left = Math.random() * 100 + 'vw';
+                    ember.style.bottom = '-10px';
+                    ember.style.animationDuration = (1 + Math.random() * 2) + 's';
+                    ember.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(ember);
+                }
             }
             else if (name === 'Romance') {
-                for(let i=0; i<15; i++) {
+                for(let i=0; i<20; i++) {
                     const heart = document.createElement('i');
                     heart.className = 'fa-solid fa-heart anim-heart';
                     heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.animationDuration = (2 + Math.random()) + 's';
+                    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
                     heart.style.fontSize = (20 + Math.random() * 30) + 'px';
                     container.appendChild(heart);
                 }
             }
             else if (name === 'Nature') {
-                for(let i=0; i<15; i++) {
+                for(let i=0; i<20; i++) {
                     const leaf = document.createElement('i');
                     leaf.className = 'fa-solid fa-leaf anim-leaf';
                     leaf.style.left = Math.random() * 100 + 'vw';
-                    leaf.style.animationDelay = Math.random() + 's';
+                    leaf.style.top = '-50px';
+                    leaf.style.animationDuration = (3 + Math.random() * 4) + 's';
                     leaf.style.fontSize = (15 + Math.random() * 20) + 'px';
                     container.appendChild(leaf);
                 }
             }
             else if (name === 'Chill') {
-                // Wind
                 for(let i=0; i<8; i++) {
-                    const wind = document.createElement('div');
-                    wind.className = 'anim-wind';
-                    wind.style.top = Math.random() * 100 + 'vh';
-                    wind.style.width = (100 + Math.random() * 300) + 'px';
-                    wind.style.animationDuration = (1 + Math.random()) + 's';
-                    wind.style.animationDelay = Math.random() * 0.5 + 's';
-                    container.appendChild(wind);
+                    const mist = document.createElement('div');
+                    mist.className = 'anim-mist';
+                    mist.style.top = Math.random() * 90 + 'vh';
+                    mist.style.width = (200 + Math.random() * 200) + 'px';
+                    mist.style.height = (100 + Math.random() * 100) + 'px';
+                    mist.style.animationDuration = (5 + Math.random() * 5) + 's';
+                    container.appendChild(mist);
                 }
             }
             
             // Cleanup
-            setTimeout(() => { container.innerHTML = ''; }, 3500);
+            setTimeout(() => { container.innerHTML = ''; }, 7000); // Extended duration
         }
 
         function showToast(message) {
