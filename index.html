@@ -310,6 +310,7 @@
                         <span id="header-initials" class="font-bold text-xs text-slate-800">NM</span>
                     </div>
                 </div>
+                <!-- CHANGED: Hidden on mobile (hidden), shown on desktop (md:block) -->
                 <h1 id="header-name" class="font-bold text-lg tracking-tight hidden md:block">Nazim Mubin</h1>
             </div>
             
@@ -396,11 +397,13 @@
                         </a>
                         
                         <div class="grid grid-cols-2 gap-2">
-                            <a id="btn-apple" href="#" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-pink-50 text-slate-700 hover:text-pink-600 py-3 rounded-xl transition-colors border border-slate-200">
+                            <!-- Apple: Black Theme -->
+                            <a id="btn-apple" href="#" class="flex items-center justify-center gap-2 bg-black/5 hover:bg-black text-black hover:text-white py-3 rounded-xl transition-all border border-black/10">
                                 <i class="fa-brands fa-apple text-lg"></i>
                                 <span class="text-xs font-semibold">Apple</span>
                             </a>
-                            <a id="btn-ytmusic" href="#" class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-red-600 py-3 rounded-xl transition-colors border border-slate-200">
+                            <!-- YT Music: Red Theme -->
+                            <a id="btn-ytmusic" href="#" class="flex items-center justify-center gap-2 bg-red-600/5 hover:bg-red-600 text-red-600 hover:text-white py-3 rounded-xl transition-all border border-red-600/10">
                                 <i class="fa-solid fa-circle-play text-lg"></i>
                                 <span class="text-xs font-semibold">YT Music</span>
                             </a>
