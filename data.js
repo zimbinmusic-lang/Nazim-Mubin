@@ -12,7 +12,7 @@ const siteData = {
         "spotify": "https://open.spotify.com/artist/3AeJN7kI13TEa7ItCJ9s6P"
     },
     "latest_video": {
-        "url": ""
+        "url": "https://www.youtube.com/embed/8teszBXo9zg?si=_7LxM6OXsnn6itQR"
     },
     "featured_song": {
         "title": "Aaja Heeriye",
