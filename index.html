@@ -42,6 +42,7 @@
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             transition: background 1s ease; /* Smooth vibe switch */
+            overflow-x: hidden; /* Prevent horizontal scroll from anims */
         }
 
         @keyframes gradientBG {
@@ -162,64 +163,67 @@
             overflow: hidden;
         }
 
-        /* Energy: Rising Sparks */
-        @keyframes riseUpWiggle {
-            0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
-            10% { opacity: 1; }
-            50% { transform: translateY(50vh) translateX(10px) scale(1); }
-            100% { transform: translateY(-10vh) translateX(-10px) scale(0.2); opacity: 0; }
+        /* Energy: Rising Sparks with varying wiggles */
+        @keyframes emberRise {
+            0% { transform: translateY(105vh) scale(0); opacity: 0; }
+            10% { opacity: 1; transform: translateY(90vh) scale(1); }
+            50% { transform: translateY(50vh) translateX(-10px) scale(0.8); opacity: 0.8; }
+            100% { transform: translateY(-10vh) translateX(10px) scale(0); opacity: 0; }
         }
         .anim-ember {
             position: absolute;
-            width: 4px;
-            height: 4px;
-            background: #f97316;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fbbf24 20%, #f97316 80%);
             border-radius: 50%;
-            box-shadow: 0 0 10px #f97316, 0 0 20px #fbbf24;
-            animation: riseUpWiggle ease-out forwards;
+            box-shadow: 0 0 15px 2px rgba(249, 115, 22, 0.6);
+            animation: emberRise linear forwards;
         }
 
         /* Romance: Swaying Balloons/Hearts */
-        @keyframes floatSway {
-            0% { transform: translateY(110vh) translateX(0) rotate(0deg) scale(0.5); opacity: 0; }
-            10% { opacity: 0.9; }
-            25% { transform: translateY(80vh) translateX(15px) rotate(5deg); }
-            50% { transform: translateY(50vh) translateX(-15px) rotate(-5deg); }
-            75% { transform: translateY(20vh) translateX(10px) rotate(3deg); }
-            100% { transform: translateY(-20vh) translateX(0) rotate(0deg) scale(1.1); opacity: 0; }
+        @keyframes heartFloat {
+            0% { transform: translateY(110vh) translateX(0) scale(0.5); opacity: 0; }
+            10% { opacity: 0.8; }
+            33% { transform: translateY(80vh) translateX(25px) rotate(10deg); }
+            66% { transform: translateY(40vh) translateX(-25px) rotate(-10deg); }
+            100% { transform: translateY(-10vh) translateX(10px) rotate(5deg) scale(1.2); opacity: 0; }
         }
         .anim-heart {
             position: absolute;
             color: #f43f5e;
-            animation: floatSway linear forwards;
-            filter: drop-shadow(0 4px 6px rgba(244, 63, 94, 0.3));
+            animation: heartFloat ease-out forwards;
+            filter: drop-shadow(0 4px 6px rgba(244, 63, 94, 0.4));
         }
 
-        /* Nature: Tumbling Leaves */
-        @keyframes leafFallTumble {
+        /* Nature: Tumbling Leaves with 3D rotation feel */
+        @keyframes leafTumble {
             0% { transform: translateY(-10vh) translateX(0) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
-            100% { transform: translateY(110vh) translateX(40px) rotate(360deg); opacity: 0; }
+            25% { transform: translateY(20vh) translateX(40px) rotate(45deg); }
+            50% { transform: translateY(50vh) translateX(-20px) rotate(120deg); }
+            75% { transform: translateY(80vh) translateX(20px) rotate(200deg); }
+            100% { transform: translateY(110vh) translateX(-10px) rotate(360deg); opacity: 0; }
         }
         .anim-leaf {
             position: absolute;
-            color: #22c55e;
-            animation: leafFallTumble linear forwards;
+            color: #4ade80;
+            animation: leafTumble linear forwards;
+            filter: drop-shadow(0 2px 4px rgba(34, 197, 94, 0.3));
         }
 
-        /* Chill: Drifting Mist */
-        @keyframes mistDrift {
-            0% { transform: translateX(-20vw); opacity: 0; }
-            20% { opacity: 0.4; }
-            80% { opacity: 0.4; }
-            100% { transform: translateX(120vw); opacity: 0; }
+        /* Chill: Drifting Volumetric Mist */
+        @keyframes mistFlow {
+            0% { transform: translateX(-50vw) scale(1); opacity: 0; }
+            20% { opacity: 0.3; }
+            80% { opacity: 0.3; }
+            100% { transform: translateX(150vw) scale(1.5); opacity: 0; }
         }
         .anim-mist {
             position: absolute;
-            background: radial-gradient(circle, rgba(99, 102, 241, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(199, 210, 254, 0.2) 60%, transparent 80%);
             border-radius: 50%;
-            filter: blur(20px);
-            animation: mistDrift linear forwards;
+            filter: blur(40px);
+            animation: mistFlow linear forwards;
         }
 
         ::-webkit-scrollbar { width: 0px; }
@@ -306,6 +310,7 @@
                         <span id="header-initials" class="font-bold text-xs text-slate-800">NM</span>
                     </div>
                 </div>
+                <!-- CHANGED: Hidden on mobile (hidden), shown on desktop (md:block) -->
                 <h1 id="header-name" class="font-bold text-lg tracking-tight hidden md:block">Nazim Mubin</h1>
             </div>
             
@@ -572,23 +577,27 @@
             container.innerHTML = ''; // Clear previous
 
             if (name === 'Energy') {
-                for(let i=0; i<30; i++) {
+                for(let i=0; i<40; i++) {
                     const ember = document.createElement('div');
                     ember.className = 'anim-ember';
+                    // Random start positions and speeds
                     ember.style.left = Math.random() * 100 + 'vw';
-                    ember.style.bottom = '-10px';
-                    ember.style.animationDuration = (1 + Math.random() * 2) + 's';
-                    ember.style.animationDelay = Math.random() * 0.5 + 's';
+                    ember.style.bottom = '-20px';
+                    ember.style.animationDuration = (2 + Math.random() * 3) + 's'; 
+                    ember.style.animationDelay = Math.random() * 2 + 's';
+                    ember.style.opacity = Math.random();
                     container.appendChild(ember);
                 }
             }
             else if (name === 'Romance') {
-                for(let i=0; i<20; i++) {
+                for(let i=0; i<25; i++) {
                     const heart = document.createElement('i');
                     heart.className = 'fa-solid fa-heart anim-heart';
                     heart.style.left = Math.random() * 100 + 'vw';
-                    heart.style.animationDuration = (4 + Math.random() * 3) + 's';
-                    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                    heart.style.bottom = '-50px';
+                    heart.style.animationDuration = (5 + Math.random() * 5) + 's';
+                    heart.style.fontSize = (15 + Math.random() * 35) + 'px';
+                    heart.style.animationDelay = Math.random() * 2 + 's';
                     container.appendChild(heart);
                 }
             }
@@ -598,25 +607,27 @@
                     leaf.className = 'fa-solid fa-leaf anim-leaf';
                     leaf.style.left = Math.random() * 100 + 'vw';
                     leaf.style.top = '-50px';
-                    leaf.style.animationDuration = (3 + Math.random() * 4) + 's';
+                    leaf.style.animationDuration = (4 + Math.random() * 5) + 's';
                     leaf.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    leaf.style.animationDelay = Math.random() * 3 + 's';
                     container.appendChild(leaf);
                 }
             }
             else if (name === 'Chill') {
-                for(let i=0; i<8; i++) {
+                for(let i=0; i<6; i++) {
                     const mist = document.createElement('div');
                     mist.className = 'anim-mist';
                     mist.style.top = Math.random() * 90 + 'vh';
-                    mist.style.width = (200 + Math.random() * 200) + 'px';
-                    mist.style.height = (100 + Math.random() * 100) + 'px';
-                    mist.style.animationDuration = (5 + Math.random() * 5) + 's';
+                    mist.style.width = (300 + Math.random() * 300) + 'px';
+                    mist.style.height = (200 + Math.random() * 200) + 'px';
+                    mist.style.animationDuration = (10 + Math.random() * 10) + 's'; // Slow move
+                    mist.style.animationDelay = Math.random() * 2 + 's';
                     container.appendChild(mist);
                 }
             }
             
-            // Cleanup
-            setTimeout(() => { container.innerHTML = ''; }, 7000); // Extended duration
+            // Cleanup after longer duration (12s to cover slowest elements)
+            setTimeout(() => { container.innerHTML = ''; }, 12000); 
         }
 
         function showToast(message) {
