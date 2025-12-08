@@ -3,7 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO & Social Sharing (Open Graph) -->
     <title>Nazim Mubin | Official Links</title>
+    <meta name="description" content="Official links, latest music, and videos from Nazim Mubin.">
+    <meta property="og:title" content="Nazim Mubin | Official Links">
+    <meta property="og:description" content="Listen to the latest single 'Aaja Heeriye' and watch official videos.">
+    <meta property="og:image" content="profile.png">
+    <meta property="og:type" content="website">
     
     <!-- Tailwind (Primary CSS) -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -16,11 +23,10 @@
     <script src="data.js"></script>
 
     <style>
-        /* --- 1. CORE STYLES & FALLBACKS (Works even if Tailwind fails) --- */
+        /* --- 1. CORE STYLES & FALLBACKS --- */
         :root {
             --bg-color: #f8fafc;
             --text-color: #0f172a;
-            --accent-color: #4f46e5;
         }
         body {
             font-family: 'Outfit', sans-serif, system-ui;
@@ -28,15 +34,25 @@
             color: var(--text-color);
             margin: 0;
             line-height: 1.5;
+            /* subtle ambient background */
+            background: linear-gradient(-45deg, #f8fafc, #eef2ff, #fdf4ff, #f8fafc);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
         }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
         a { text-decoration: none; color: inherit; }
         
-        /* Layout Helpers (Backup for Tailwind Utilities) */
+        /* Layout Helpers */
         .wrapper { max-width: 48rem; margin: 0 auto; padding: 0 1rem; }
         .flex-row { display: flex; align-items: center; justify-content: space-between; }
         .grid-layout { display: grid; grid-template-columns: 1fr; gap: 1rem; }
         
-        /* Responsive Grid Fallback */
         @media (min-width: 768px) {
             .grid-layout { grid-template-columns: 1fr 1fr; }
         }
@@ -51,11 +67,9 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            /* Smooth transitions */
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
         }
 
-        /* Hover Effect (Only works if Tailwind loads, but structure remains) */
         .bento-card:hover {
             transform: translateY(-5px) scale(1.01);
             box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
@@ -79,8 +93,6 @@
         .bg-pattern-2 { background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); }
 
         /* --- 3. LOADING ANIMATIONS --- */
-        
-        /* Initial Preloader */
         #page-loader {
             position: fixed;
             inset: 0;
@@ -101,7 +113,6 @@
         }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Content Reveal Animation */
         .reveal-on-scroll {
             opacity: 0;
             transform: translateY(20px);
@@ -112,11 +123,10 @@
             transform: translateY(0);
         }
 
-        /* Hide Scrollbar */
         ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-900 pb-12">
+<body class="pb-12">
 
     <!-- LOADING OVERLAY -->
     <div id="page-loader">
@@ -138,7 +148,14 @@
                 <h1 id="header-name" class="font-bold text-lg tracking-tight">Nazim Mubin</h1>
             </div>
             
-            <div class="flex gap-4 text-lg text-slate-400">
+            <div class="flex gap-4 text-lg text-slate-400 items-center">
+                <!-- Share Button (New) -->
+                <button onclick="shareProfile()" class="w-8 h-8 rounded-full bg-slate-100 hover:bg-indigo-100 hover:text-indigo-600 flex items-center justify-center transition-colors text-base" title="Share Profile">
+                    <i class="fa-solid fa-share-nodes"></i>
+                </button>
+                
+                <div class="w-px h-6 bg-slate-200 mx-1"></div>
+
                 <a id="header-yt-link" href="#" class="smart-link hover:text-red-600 transition-colors" data-platform="youtube"><i class="fa-brands fa-youtube"></i></a>
                 <a id="header-ig-link" href="#" class="smart-link hover:text-pink-600 transition-colors" data-platform="instagram"><i class="fa-brands fa-instagram"></i></a>
             </div>
@@ -151,12 +168,11 @@
         <div class="w-full reveal-on-scroll">
             <div class="flex-row flex items-center justify-between mb-3 px-1">
                 <h2 class="font-bold text-xl text-slate-800">Latest Video</h2>
-                <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">Out Now</span>
+                <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">LIVE NOW</span>
             </div>
             
             <div class="bento-card w-full aspect-video shadow-xl ring-4 ring-white group cursor-pointer bg-slate-200">
                 <a id="hero-video-link" href="#" class="smart-link block w-full h-full relative" data-platform="youtube">
-                    <!-- Added bg-slate-200 as placeholder color while img loads -->
                     <img 
                         id="hero-video-thumb"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-0 transition-opacity duration-500"
@@ -180,7 +196,6 @@
         <div class="reveal-on-scroll">
             <h2 class="font-bold text-xl text-slate-800 mb-4 px-1">Music & Connect</h2>
             
-            <!-- grid-layout class added for CSS fallback -->
             <div class="grid-layout grid grid-cols-1 md:grid-cols-2 gap-4">
 
                 <!-- Featured Song Card -->
@@ -290,19 +305,42 @@
             </div>
         </div>
 
-        <footer class="py-8 text-center border-t border-slate-200 mt-8 reveal-on-scroll">
+        <footer class="py-8 text-center border-t border-slate-200 mt-8 reveal-on-scroll space-y-4">
+            <!-- Booking Button -->
+            <a href="mailto:contact@nazimmubin.com" class="inline-block px-6 py-2 rounded-full border border-slate-300 text-slate-500 hover:border-slate-800 hover:text-slate-800 transition-colors text-sm font-semibold">
+                <i class="fa-regular fa-envelope mr-2"></i> Bookings & Inquiries
+            </a>
+            
             <p id="footer-text" class="text-slate-400 text-sm">© 2025 Nazim Mubin. All rights reserved.</p>
         </footer>
 
     </main>
 
     <script>
+        // --- 5. Share Function ---
+        function shareProfile() {
+            if (navigator.share) {
+                navigator.share({
+                    title: document.title,
+                    text: 'Check out official links for Nazim Mubin',
+                    url: window.location.href,
+                })
+                .catch((error) => console.log('Error sharing', error));
+            } else {
+                // Fallback for desktop or browsers without share API
+                navigator.clipboard.writeText(window.location.href);
+                const btn = document.querySelector('button[onclick="shareProfile()"]');
+                const originalIcon = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check text-green-500"></i>';
+                setTimeout(() => btn.innerHTML = originalIcon, 2000);
+            }
+        }
+
         document.addEventListener("DOMContentLoaded", function() {
             
             // 1. Remove Loader Animation
             const loader = document.getElementById('page-loader');
             if(loader) {
-                // Short delay to ensure JS has processed data
                 setTimeout(() => {
                     loader.style.opacity = '0';
                     setTimeout(() => { loader.style.display = 'none'; }, 500);
@@ -323,7 +361,6 @@
                 }, observerOptions);
 
                 document.querySelectorAll('.reveal-on-scroll').forEach((el, index) => {
-                    // Stagger the animation
                     el.style.transitionDelay = `${index * 0.1}s`;
                     observer.observe(el);
                 });
@@ -338,7 +375,10 @@
                 document.getElementById('bio-header-name').textContent = siteData.profile.name.split(" ")[0]; 
                 document.getElementById('bio-signature').textContent = "~ " + siteData.profile.name;
                 document.getElementById('footer-text').textContent = "© 2025 " + siteData.profile.name + ". All rights reserved.";
-                document.getElementById('bio-image').src = siteData.profile.image;
+                
+                // FIX: Commented out so it uses your local profile.png instead of the data.js link
+                // document.getElementById('bio-image').src = siteData.profile.image;
+                
                 document.getElementById('bio-text-1').textContent = siteData.profile.bio_p1;
                 document.getElementById('bio-text-2').textContent = siteData.profile.bio_p2;
 
