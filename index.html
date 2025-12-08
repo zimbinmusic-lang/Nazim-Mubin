@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nazim Mubin | Official Links</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
     
+    <script src="data.js"></script>
+
     <style>
         body {
             font-family: 'Outfit', sans-serif;
@@ -42,46 +41,32 @@
         .bg-pattern-2 { background: linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%); }
         .bg-pattern-3 { background: linear-gradient(to top, #cfd9df 0%, #e2ebf0 100%); }
 
-        /* Play Button Overlay */
-        .play-overlay {
-            opacity: 0;
-            background: rgba(0,0,0,0.3);
-            transition: opacity 0.3s ease;
-        }
-        .bento-card:hover .play-overlay {
-            opacity: 1;
-        }
-        
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-900 pb-12">
 
-    <!-- Navbar / Header (Sticky) -->
     <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-200 px-6 py-4 mb-8">
         <div class="max-w-3xl mx-auto flex items-center justify-between">
             <div class="flex items-center gap-3">
                 <div class="w-10 h-10 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 p-[2px]">
                     <div class="w-full h-full rounded-full bg-white flex items-center justify-center">
-                        <span class="font-bold text-xs">NM</span>
+                        <span id="header-initials" class="font-bold text-xs">NM</span>
                     </div>
                 </div>
-                <h1 class="font-bold text-lg tracking-tight">Nazim Mubin</h1>
+                <h1 id="header-name" class="font-bold text-lg tracking-tight">Nazim Mubin</h1>
             </div>
             
-            <!-- Quick Socials -->
             <div class="flex gap-4 text-lg text-slate-400">
-                <a href="https://www.youtube.com/@nazimxmubin" class="hover:text-red-600 transition-colors"><i class="fa-brands fa-youtube"></i></a>
-                <a href="https://www.instagram.com/" class="hover:text-pink-600 transition-colors"><i class="fa-brands fa-instagram"></i></a>
+                <a id="header-yt-link" href="https://www.youtube.com/@nazimxmubin" class="hover:text-red-600 transition-colors"><i class="fa-brands fa-youtube"></i></a>
+                <a id="header-ig-link" href="https://www.instagram.com/" class="hover:text-pink-600 transition-colors"><i class="fa-brands fa-instagram"></i></a>
             </div>
         </div>
     </header>
 
-    <!-- Main Grid Container -->
     <main class="max-w-3xl mx-auto px-4 space-y-8">
 
-        <!-- SECTION 1: HERO VIDEO (The Hook) -->
         <div class="w-full">
             <div class="flex items-center justify-between mb-3 px-1">
                 <h2 class="font-bold text-xl text-slate-800">Latest Video</h2>
@@ -89,6 +74,7 @@
             </div>
             <div class="bento-card w-full aspect-video shadow-xl ring-4 ring-white">
                 <iframe 
+                    id="hero-video-frame"
                     class="w-full h-full object-cover"
                     src="https://www.youtube.com/embed/8teszBXo9zg?si=_7LxM6OXsnn6itQR" 
                     title="YouTube video player" 
@@ -99,39 +85,34 @@
             </div>
         </div>
 
-        <!-- SECTION 2: DISCOGRAPHY GRID -->
         <div>
             <h2 class="font-bold text-xl text-slate-800 mb-4 px-1">Music & Connect</h2>
             
-            <!-- Grid Layout -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-                <!-- CARD 1: New Single (Aaja Heeriye) -->
                 <div class="bento-card p-5 flex flex-col justify-between h-64 bg-white group cursor-default relative">
                     <div class="absolute top-0 right-0 bg-indigo-600 text-white text-xs font-bold px-3 py-1 rounded-bl-xl z-20">
                         NEW SINGLE
                     </div>
                     
                     <div class="flex items-start gap-4 z-10">
-                        <!-- Placeholder Album Art -->
                         <div class="w-20 h-20 rounded-xl bg-pattern-1 shadow-md shrink-0 flex items-center justify-center text-white/50 text-2xl">
                             <i class="fa-solid fa-music"></i>
                         </div>
                         <div>
-                            <h3 class="font-bold text-lg leading-tight mb-1">Aaja Heeriye</h3>
-                            <p class="text-sm text-slate-500">Nazim Mubin</p>
-                            <p class="text-xs text-indigo-500 mt-2 font-medium">Out Now</p>
+                            <h3 id="song-title" class="font-bold text-lg leading-tight mb-1">Aaja Heeriye</h3>
+                            <p id="song-artist" class="text-sm text-slate-500">Nazim Mubin</p>
+                            <p id="song-status" class="text-xs text-indigo-500 mt-2 font-medium">Out Now</p>
                         </div>
                     </div>
 
-                    <!-- Action Buttons for Card 1 -->
                     <div class="grid grid-cols-2 gap-2 mt-4 z-10">
-                        <a href="https://music.apple.com/us/album/aaja-heeriye-single/1857156505" target="_blank" 
+                        <a id="btn-apple" href="https://music.apple.com/us/album/aaja-heeriye-single/1857156505" target="_blank" 
                            class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-pink-50 text-slate-700 hover:text-pink-600 py-3 rounded-xl transition-colors border border-slate-200">
                             <i class="fa-brands fa-apple text-lg"></i>
                             <span class="text-sm font-semibold">Apple</span>
                         </a>
-                        <a href="https://music.youtube.com/watch?v=RYFV15aYEG4&si=1C_TBg3oyq8tfsMd" target="_blank" 
+                        <a id="btn-ytmusic" href="https://music.youtube.com/watch?v=RYFV15aYEG4&si=1C_TBg3oyq8tfsMd" target="_blank" 
                            class="flex items-center justify-center gap-2 bg-slate-50 hover:bg-red-50 text-slate-700 hover:text-red-600 py-3 rounded-xl transition-colors border border-slate-200">
                             <i class="fa-solid fa-circle-play text-lg"></i>
                             <span class="text-sm font-semibold">YT Music</span>
@@ -139,7 +120,6 @@
                     </div>
                 </div>
 
-                <!-- CARD 2: Previous Release (Spotify Focus) -->
                 <div class="bento-card p-0 h-64 relative overflow-hidden group">
                     <div class="absolute inset-0 bg-pattern-2 opacity-30"></div>
                     <div class="relative z-10 h-full flex flex-col p-5">
@@ -149,6 +129,7 @@
                         </div>
                         <div class="w-full rounded-xl overflow-hidden shadow-sm mt-auto">
                             <iframe 
+                                id="spotify-embed-frame"
                                 style="border-radius:12px" 
                                 src="https://open.spotify.com/embed/track/0VPdtAOwfk4tKJYSAOX9vA?utm_source=generator&theme=0" 
                                 width="100%" 
@@ -162,8 +143,7 @@
                     </div>
                 </div>
 
-                <!-- CARD 3: Spotify Follow (NEW) -->
-                <a href="https://open.spotify.com/artist/3AeJN7kI13TEa7ItCJ9s6P" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-[#1DB954] text-white transition-colors border-none hover:bg-[#1ed760]">
+                <a id="spotify-profile-link" href="https://open.spotify.com/artist/3AeJN7kI13TEa7ItCJ9s6P" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-[#1DB954] text-white transition-colors border-none hover:bg-[#1ed760]">
                     <div class="w-16 h-16 rounded-full bg-black/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-brands fa-spotify text-3xl"></i>
                     </div>
@@ -171,8 +151,7 @@
                     <p class="text-white/80 text-sm mt-2">Stream my full discography & get updates</p>
                 </a>
 
-                <!-- CARD 4: YouTube Subscribe -->
-                <a href="https://www.youtube.com/@nazimxmubin" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-slate-900 text-white hover:bg-[#FF0000] transition-colors border-none">
+                <a id="youtube-subscribe-link" href="https://www.youtube.com/@nazimxmubin" target="_blank" class="bento-card h-64 flex flex-col items-center justify-center p-6 text-center group bg-slate-900 text-white hover:bg-[#FF0000] transition-colors border-none">
                     <div class="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
                         <i class="fa-brands fa-youtube text-3xl"></i>
                     </div>
@@ -183,48 +162,40 @@
             </div>
         </div>
 
-        <!-- SECTION 3: BIO & ABOUT (NEW) -->
         <div class="w-full bg-white rounded-3xl border border-e2e8f0 p-6 md:p-8 shadow-sm">
-            <h2 class="font-bold text-xl text-slate-800 mb-6">About Nazim</h2>
+            <h2 class="font-bold text-xl text-slate-800 mb-6">About <span id="bio-header-name">Nazim</span></h2>
             
             <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                <!-- Artist Image Placeholder -->
                 <div class="w-32 h-32 md:w-48 md:h-48 rounded-full md:rounded-2xl bg-slate-200 shrink-0 overflow-hidden shadow-inner border-4 border-slate-50">
-                    <!-- Replace 'src' with your actual photo URL -->
-                    <img src="https://ui-avatars.com/api/?name=Nazim+Mubin&background=6366f1&color=fff&size=256" 
+                    <img id="bio-image" 
+                         src="https://ui-avatars.com/api/?name=Nazim+Mubin&background=6366f1&color=fff&size=256" 
                          alt="Nazim Mubin" 
                          class="w-full h-full object-cover">
                 </div>
                 
                 <div class="flex-1 text-center md:text-left space-y-4">
-                    <p class="text-slate-600 leading-relaxed">
+                    <p id="bio-text-1" class="text-slate-600 leading-relaxed">
                         Nazim Mubin is a passionate musical artist creating soulful melodies and engaging content. With a unique blend of modern sounds and heartfelt lyrics, Nazim brings a fresh perspective to the music scene.
                     </p>
-                    <p class="text-slate-600 leading-relaxed hidden md:block">
+                    <p id="bio-text-2" class="text-slate-600 leading-relaxed hidden md:block">
                         From his latest single "Aaja Heeriye" to his growing presence on YouTube, Nazim is dedicated to connecting with listeners through the power of music. Join the journey by following on Spotify and subscribing on YouTube.
                     </p>
                     
-                    <!-- Signature / Sign-off -->
                     <div class="pt-2">
-                        <span class="font-handwriting text-indigo-500 font-semibold text-lg italic">~ Nazim Mubin</span>
+                        <span id="bio-signature" class="font-handwriting text-indigo-500 font-semibold text-lg italic">~ Nazim Mubin</span>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Footer -->
         <footer class="py-8 text-center border-t border-slate-200 mt-8">
-            <p class="text-slate-400 text-sm">© 2025 Nazim Mubin. All rights reserved.</p>
+            <p id="footer-text" class="text-slate-400 text-sm">© 2025 Nazim Mubin. All rights reserved.</p>
         </footer>
 
     </main>
 
     <script>
-        // Smooth reveal animation for sections
-        const observerOptions = {
-            threshold: 0.1
-        };
-
+        const observerOptions = { threshold: 0.1 };
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -239,6 +210,48 @@
             el.style.transform = 'translateY(20px)';
             el.style.transition = `all 0.6s cubic-bezier(0.16, 1, 0.3, 1) ${index * 0.1}s`;
             observer.observe(el);
+        });
+    </script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Check if siteData exists (from data.js)
+            if (typeof siteData !== 'undefined') {
+                
+                // --- PROFILE INFO ---
+                document.getElementById('header-initials').textContent = siteData.profile.initials;
+                document.getElementById('header-name').textContent = siteData.profile.name;
+                document.getElementById('song-artist').textContent = siteData.profile.name;
+                document.getElementById('bio-header-name').textContent = siteData.profile.name.split(" ")[0]; // First name only for "About X"
+                document.getElementById('bio-signature').textContent = "~ " + siteData.profile.name;
+                document.getElementById('footer-text').textContent = "© 2025 " + siteData.profile.name + ". All rights reserved.";
+                document.getElementById('bio-image').src = siteData.profile.image;
+                
+                // Bio Paragraphs
+                document.getElementById('bio-text-1').textContent = siteData.profile.bio_p1;
+                document.getElementById('bio-text-2').textContent = siteData.profile.bio_p2;
+
+                // --- LINKS ---
+                document.getElementById('header-yt-link').href = siteData.socials.youtube;
+                document.getElementById('header-ig-link').href = siteData.socials.instagram;
+                document.getElementById('youtube-subscribe-link').href = siteData.socials.youtube;
+                document.getElementById('spotify-profile-link').href = siteData.socials.spotify;
+
+                // --- CONTENT ---
+                // Latest Video
+                document.getElementById('hero-video-frame').src = siteData.latest_video.url;
+                
+                // Featured Song
+                document.getElementById('song-title').textContent = siteData.featured_song.title;
+                document.getElementById('song-status').textContent = siteData.featured_song.status;
+                document.getElementById('btn-apple').href = siteData.featured_song.apple_link;
+                document.getElementById('btn-ytmusic').href = siteData.featured_song.yt_music_link;
+
+                // Popular Track Embed
+                document.getElementById('spotify-embed-frame').src = siteData.popular_track.spotify_embed;
+            } else {
+                console.log("data.js not loaded. Using default static HTML content.");
+            }
         });
     </script>
 </body>
