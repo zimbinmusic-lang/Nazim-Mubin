@@ -153,6 +153,49 @@
             bottom: 50px;
         }
 
+        /* --- 4. VIBE ANIMATION PARTICLES --- */
+        #vibe-animation-layer {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 9998;
+            overflow: hidden;
+        }
+
+        /* Flash (Energy) */
+        @keyframes flashAnim { 0% { opacity: 0; } 50% { opacity: 0.6; background: white; } 100% { opacity: 0; } }
+        .anim-flash { animation: flashAnim 0.5s ease-out forwards; }
+
+        /* Hearts (Romance) */
+        @keyframes floatUp { 
+            0% { transform: translateY(110vh) scale(0.5); opacity: 0; } 
+            20% { opacity: 0.8; } 
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; } 
+        }
+        .anim-heart { position: absolute; color: #fb7185; animation: floatUp 3s ease-out forwards; }
+
+        /* Leaves (Nature) */
+        @keyframes fallDown { 
+            0% { transform: translateY(-10vh) rotate(0deg) translateX(0); opacity: 0; } 
+            20% { opacity: 1; } 
+            100% { transform: translateY(110vh) rotate(360deg) translateX(20px); opacity: 0; } 
+        }
+        .anim-leaf { position: absolute; color: #4ade80; animation: fallDown 3s linear forwards; }
+
+        /* Wind/Breeze (Chill) */
+        @keyframes driftRight { 
+            0% { transform: translateX(-100vw); opacity: 0; } 
+            20% { opacity: 0.4; } 
+            100% { transform: translateX(100vw); opacity: 0; } 
+        }
+        .anim-wind { 
+            position: absolute; 
+            height: 1px; 
+            background: linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.5), transparent); 
+            width: 150px; 
+            animation: driftRight 2s ease-in-out forwards; 
+        }
+
         ::-webkit-scrollbar { width: 0px; }
     </style>
 </head>
@@ -166,6 +209,9 @@
         </div>
     </div>
 
+    <!-- VIBE ANIMATION LAYER -->
+    <div id="vibe-animation-layer"></div>
+
     <!-- TOAST NOTIFICATION -->
     <div id="toast">Vibe Switched!</div>
 
@@ -175,10 +221,17 @@
         <div class="absolute inset-0 bg-black/40 backdrop-blur-sm" onclick="closeShareModal()"></div>
         
         <!-- Bottom Sheet -->
-        <div id="share-sheet" class="bg-white w-full max-w-md rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300 pointer-events-auto shadow-2xl">
+        <div id="share-sheet" class="bg-white w-full max-w-md rounded-t-3xl p-6 transform translate-y-full transition-transform duration-300 pointer-events-auto shadow-2xl relative">
             <div class="w-12 h-1 bg-slate-200 rounded-full mx-auto mb-6"></div>
             
-            <h3 class="font-bold text-lg text-slate-800 mb-6 text-center">Share Profile</h3>
+            <!-- Updated Share Header with Profile Pic -->
+            <div class="text-center mb-8">
+                <div class="w-20 h-20 rounded-full bg-slate-100 mx-auto mb-3 p-1 border-2 border-indigo-100 shadow-sm">
+                    <img id="share-profile-img" src="profile.png" alt="Profile" class="w-full h-full rounded-full object-cover">
+                </div>
+                <h3 class="font-bold text-lg text-slate-800">Share Profile</h3>
+                <p class="text-slate-400 text-sm">Share these official links with friends</p>
+            </div>
             
             <div class="grid grid-cols-4 gap-4 mb-8">
                 <!-- WhatsApp -->
@@ -227,7 +280,8 @@
                         <span id="header-initials" class="font-bold text-xs text-slate-800">NM</span>
                     </div>
                 </div>
-                <h1 id="header-name" class="font-bold text-lg tracking-tight">Nazim Mubin</h1>
+                <!-- CHANGED: Hidden on mobile (hidden), shown on desktop (md:block) -->
+                <h1 id="header-name" class="font-bold text-lg tracking-tight hidden md:block">Nazim Mubin</h1>
             </div>
             
             <div class="flex gap-3 text-lg text-slate-400 items-center">
@@ -255,7 +309,8 @@
         <div class="w-full reveal-on-scroll">
             <div class="flex-row flex items-center justify-between mb-3 px-1">
                 <h2 class="font-bold text-xl text-slate-800">Latest Video</h2>
-                <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">Out Now</span>
+                <!-- CHANGED: Updated text from LIVE NOW to NEW RELEASE -->
+                <span class="text-xs font-semibold bg-red-100 text-red-600 px-2 py-1 rounded-full animate-pulse">NEW RELEASE</span>
             </div>
             
             <div class="bento-card w-full aspect-video shadow-xl ring-4 ring-white group cursor-pointer bg-slate-200">
@@ -393,8 +448,8 @@
         </div>
 
         <footer class="py-8 text-center border-t border-slate-200 mt-8 reveal-on-scroll space-y-4">
-            <!-- Booking Button -->
-            <a href="mailto:contact@nazimmubin.com" class="inline-block px-6 py-2 rounded-full border border-slate-300 text-slate-500 hover:border-slate-800 hover:text-slate-800 transition-colors text-sm font-semibold">
+            <!-- Booking Button Updated Email -->
+            <a href="mailto:zimbinmusic@gmail.com" class="inline-block px-6 py-2 rounded-full border border-slate-300 text-slate-500 hover:border-slate-800 hover:text-slate-800 transition-colors text-sm font-semibold">
                 <i class="fa-regular fa-envelope mr-2"></i> Bookings & Inquiries
             </a>
             
@@ -426,6 +481,13 @@
 
         // --- Custom Share Modal Logic ---
         function openShareModal() {
+            // Update the profile image in share sheet if it exists
+            const shareImg = document.getElementById('share-profile-img');
+            const bioImg = document.getElementById('bio-image');
+            if (shareImg && bioImg) {
+                shareImg.src = bioImg.src;
+            }
+
             const modal = document.getElementById('share-modal');
             const sheet = document.getElementById('share-sheet');
             modal.classList.remove('opacity-0', 'pointer-events-none');
@@ -477,7 +539,54 @@
             root.style.setProperty('--gradient-2', vibe.colors[1]);
             root.style.setProperty('--gradient-3', vibe.colors[2]);
             
+            triggerVibeAnimation(vibe.name);
             showToast(`Vibe: ${vibe.name}`);
+        }
+
+        function triggerVibeAnimation(name) {
+            const container = document.getElementById('vibe-animation-layer');
+            container.innerHTML = ''; // Clear previous
+
+            if (name === 'Energy') {
+                const flash = document.createElement('div');
+                flash.className = 'absolute inset-0 anim-flash';
+                container.appendChild(flash);
+            }
+            else if (name === 'Romance') {
+                for(let i=0; i<15; i++) {
+                    const heart = document.createElement('i');
+                    heart.className = 'fa-solid fa-heart anim-heart';
+                    heart.style.left = Math.random() * 100 + 'vw';
+                    heart.style.animationDuration = (2 + Math.random()) + 's';
+                    heart.style.fontSize = (20 + Math.random() * 30) + 'px';
+                    container.appendChild(heart);
+                }
+            }
+            else if (name === 'Nature') {
+                for(let i=0; i<15; i++) {
+                    const leaf = document.createElement('i');
+                    leaf.className = 'fa-solid fa-leaf anim-leaf';
+                    leaf.style.left = Math.random() * 100 + 'vw';
+                    leaf.style.animationDelay = Math.random() + 's';
+                    leaf.style.fontSize = (15 + Math.random() * 20) + 'px';
+                    container.appendChild(leaf);
+                }
+            }
+            else if (name === 'Chill') {
+                // Wind
+                for(let i=0; i<8; i++) {
+                    const wind = document.createElement('div');
+                    wind.className = 'anim-wind';
+                    wind.style.top = Math.random() * 100 + 'vh';
+                    wind.style.width = (100 + Math.random() * 300) + 'px';
+                    wind.style.animationDuration = (1 + Math.random()) + 's';
+                    wind.style.animationDelay = Math.random() * 0.5 + 's';
+                    container.appendChild(wind);
+                }
+            }
+            
+            // Cleanup
+            setTimeout(() => { container.innerHTML = ''; }, 3500);
         }
 
         function showToast(message) {
