@@ -86,7 +86,6 @@
             padding-bottom: 56.25%; /* 16:9 */
             height: 0;
             overflow: hidden;
-            border-radius: 0.5rem;
             background: #000;
         }
         .video-container iframe {
@@ -101,6 +100,19 @@
         .shorts-container {
             padding-bottom: 177.77%; /* 9:16 */
         }
+
+        /* Transparent Button Styles */
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="custom-scrollbar font-sans antialiased">
@@ -112,12 +124,19 @@
                 <div class="flex-shrink-0">
                     <span class="font-display font-bold text-2xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></span>
                 </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button class="text-white hover:text-neon-blue focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
                 <div class="hidden md:block">
                     <div class="ml-10 flex items-baseline space-x-8">
                         <a href="#home" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#showreel-2026" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreel 2026</a>
                         <a href="#ai-videos" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">AI Videos</a>
                         <a href="#showreels" class="hover:text-neon-purple transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreels</a>
-                        <a href="#contact" class="bg-white/10 hover:bg-white/20 transition-colors px-4 py-2 rounded-full text-sm font-medium">Contact</a>
+                        <a href="#contact" class="btn-glass px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider">Contact</a>
                     </div>
                 </div>
             </div>
@@ -125,90 +144,112 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="home" class="relative min-h-screen flex items-center justify-center hero-bg pt-16">
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center hero-bg pt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s;">
-                <h2 class="text-neon-blue font-bold tracking-widest text-sm uppercase mb-4">Portfolio</h2>
-                <h1 class="text-5xl md:text-8xl font-display font-bold mb-6 tracking-tight leading-tight">
+                <h2 class="text-neon-blue font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Portfolio</h2>
+                <h1 class="text-4xl md:text-8xl font-display font-bold mb-6 tracking-tight leading-tight">
                     I'm Nazim<br>
                     <span class="gradient-text">Product Marketer</span>
                 </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-xl text-gray-400 font-light">
+                <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light px-4">
                     Handling GTM strategies and creating <span class="text-white font-semibold">cool stuff</span> that converts.
                 </p>
-                <div class="mt-10 flex justify-center gap-4">
-                    <a href="#ai-videos" class="group relative px-8 py-3 bg-white text-black font-bold rounded-full overflow-hidden">
-                        <span class="relative z-10 group-hover:text-white transition-colors duration-300">View Work</span>
-                        <div class="absolute inset-0 bg-neon-purple transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+                
+                <!-- Redesigned Smaller, Transparent Buttons -->
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-8">
+                    <a href="#showreel-2026" class="btn-glass px-6 py-2.5 rounded-full text-sm font-medium text-white flex items-center justify-center gap-2 group">
+                        <i class="fas fa-play text-xs text-neon-blue group-hover:text-white transition-colors"></i> 
+                        Watch Showreel
                     </a>
-                    <a href="mailto:contact@nazim.com" class="px-8 py-3 border border-white/20 rounded-full hover:bg-white/5 transition-all">
+                    <a href="mailto:contact@nazim.com" class="px-6 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white border border-transparent hover:border-white/10 transition-all">
                         Get in Touch
                     </a>
                 </div>
             </div>
             
             <!-- Animated Background Elements -->
-            <div class="absolute top-1/2 left-1/4 w-72 h-72 bg-neon-blue/20 rounded-full blur-[100px] -z-10 animate-pulse-slow"></div>
-            <div class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-neon-purple/10 rounded-full blur-[120px] -z-10 animate-pulse-slow" style="animation-delay: 2s;"></div>
+            <div class="absolute top-1/2 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-neon-blue/20 rounded-full blur-[80px] md:blur-[100px] -z-10 animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-neon-purple/10 rounded-full blur-[80px] md:blur-[120px] -z-10 animate-pulse-slow" style="animation-delay: 2s;"></div>
+        </div>
+    </section>
+
+    <!-- NEW: AI Showreel 2026 Full Width -->
+    <section id="showreel-2026" class="w-full bg-black relative border-y border-white/5">
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-10 bg-gradient-to-b from-dark-bg/50 via-transparent to-dark-bg/50"></div>
+        <div class="w-full">
+            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                <iframe 
+                    class="absolute top-0 left-0 w-full h-full"
+                    src="https://drive.google.com/file/d/16AZBPswx3mWuwVmpQM7ouRg1z0rmz31X/preview?autoplay=1&mute=1" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20">
+            <h2 class="text-2xl md:text-4xl font-display font-bold text-white drop-shadow-lg">AI Showreel 2026</h2>
+            <p class="text-neon-blue text-sm font-mono tracking-wider">FUTURE VISUALS</p>
         </div>
     </section>
 
     <!-- AI Videos Section -->
-    <section id="ai-videos" class="py-24 bg-dark-bg">
+    <section id="ai-videos" class="py-16 md:py-24 bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-end justify-between mb-12">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">AI Videos</h2>
-                    <div class="h-1 w-20 bg-neon-blue rounded-full"></div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">AI Videos</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
                 </div>
-                <p class="hidden md:block text-gray-500 text-sm">Experimental & Marketing Content</p>
+                <p class="mt-2 md:mt-0 text-gray-500 text-xs md:text-sm">Experimental & Marketing Content</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="ai-video-grid">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="ai-video-grid">
                 <!-- Content injected via JS -->
             </div>
         </div>
     </section>
 
     <!-- Showreels Section -->
-    <section id="showreels" class="py-24 bg-card-bg/30 border-t border-white/5">
+    <section id="showreels" class="py-16 md:py-24 bg-card-bg/30 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-end justify-between mb-12">
+            <div class="flex items-end justify-between mb-8 md:mb-12">
                 <div>
-                    <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-2">Showreels & Games</h2>
-                    <div class="h-1 w-20 bg-neon-purple rounded-full"></div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Showreels & Games</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-purple rounded-full"></div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-12">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
                 <!-- Motion Graphics -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-4">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-film text-neon-purple"></i> Motion Graphics Showreel
                     </h3>
-                    <div class="video-container">
+                    <div class="video-container rounded-lg">
                         <iframe src="https://www.youtube.com/embed/rflC-aEzxCc" title="Motion Graphics Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <!-- Animation -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-4">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-cube text-neon-purple"></i> Animation Showreel
                     </h3>
-                    <div class="video-container">
+                    <div class="video-container rounded-lg">
                         <iframe src="https://www.youtube.com/embed/EqVfto4uJVc" title="Animation Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
 
             <!-- Game Promo (Shorts) -->
-            <div class="max-w-md mx-auto">
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-4">
-                    <h3 class="text-xl font-bold mb-4 flex items-center gap-2 justify-center">
+            <div class="max-w-xs md:max-w-md mx-auto">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2 justify-center">
                         <i class="fas fa-gamepad text-neon-blue"></i> Game Promo
                     </h3>
-                    <div class="video-container shorts-container">
+                    <div class="video-container shorts-container rounded-lg">
                         <iframe src="https://www.youtube.com/embed/LDzINZo_Vw0" title="Game Promo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -219,7 +260,7 @@
     <!-- Footer -->
     <footer id="contact" class="py-12 bg-black border-t border-white/10">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
-            <h2 class="text-3xl font-display font-bold mb-6">Let's Create Something <span class="text-neon-blue">Cool</span></h2>
+            <h2 class="text-2xl md:text-3xl font-display font-bold mb-6">Let's Create Something <span class="text-neon-blue">Cool</span></h2>
             <div class="flex space-x-6 mb-8">
                 <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all">
                     <i class="fab fa-linkedin-in"></i>
