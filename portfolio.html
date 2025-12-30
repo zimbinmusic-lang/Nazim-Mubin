@@ -25,6 +25,8 @@
                         'fade-in': 'fadeIn 1s ease-out',
                         'slide-up': 'slideUp 0.8s ease-out forwards',
                         'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 1.5s infinite linear',
+                        'marquee': 'marquee 25s linear infinite',
                     },
                     keyframes: {
                         fadeIn: {
@@ -34,6 +36,14 @@
                         slideUp: {
                             '0%': { transform: 'translateY(20px)', opacity: '0' },
                             '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' }
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
                         }
                     }
                 }
@@ -97,8 +107,22 @@
             width: 100%;
             height: 100%;
             border: 0;
+            z-index: 10; /* Ensure on top of skeleton */
         }
         
+        /* Skeleton Loader Style */
+        .skeleton-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #1a1a1a 8%, #2a2a2a 18%, #1a1a1a 33%);
+            background-size: 1000px 100%;
+            animation: shimmer 1.5s infinite linear;
+            z-index: 0; /* Behind iframe */
+        }
+
         .shorts-container {
             padding-bottom: 177.77%; /* 9:16 */
         }
@@ -119,18 +143,78 @@
         /* Experience Card Styles */
         .exp-card {
             border-left: 2px solid #333;
-            transition: border-color 0.3s ease;
+            transition: all 0.3s ease;
         }
         .exp-card:hover {
             border-left-color: #00f3ff;
             background: linear-gradient(90deg, rgba(0, 243, 255, 0.05) 0%, transparent 100%);
+            transform: translateX(5px);
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        .loader-content {
+            text-align: center;
+        }
+        .loader-bar {
+            width: 0%;
+            height: 2px;
+            background: #00f3ff;
+            margin-top: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Marquee styles */
+        .marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: flex;
+            width: 200%; /* Important for seamless loop */
+        }
+        .marquee-item {
+            flex: 0 0 auto;
+            margin-right: 2rem;
         }
     </style>
 </head>
 <body class="custom-scrollbar font-sans antialiased">
 
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <h1 class="font-display font-bold text-4xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></h1>
+            <div class="loader-bar" id="loader-progress"></div>
+        </div>
+    </div>
+
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-white/5">
+    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-white/5 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
@@ -138,7 +222,7 @@
                 </div>
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button id="mobile-menu-btn" class="text-white hover:text-neon-blue focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-white hover:text-neon-blue focus:outline-none p-2">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
@@ -155,7 +239,7 @@
             </div>
         </div>
         <!-- Mobile Menu (Hidden by default) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-black/95 absolute w-full border-b border-white/10">
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 absolute w-full border-b border-white/10 transition-all duration-300 ease-in-out opacity-0 -translate-y-2 pointer-events-none">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
                 <a href="#experience" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
@@ -168,7 +252,7 @@
     <!-- Hero Section -->
     <section id="home" class="relative min-h-[90vh] flex items-center justify-center hero-bg pt-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s;">
+            <div class="reveal active transition-delay-200">
                 <h2 class="text-neon-blue font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Portfolio</h2>
                 <h1 class="text-4xl md:text-7xl font-display font-bold mb-6 tracking-tight leading-tight">
                     I'm Nazim<br>
@@ -180,29 +264,29 @@
                 </p>
                 
                 <!-- Stats Banner -->
-                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-b border-white/10 py-6">
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-neon-blue">6+ Years</div>
+                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-b border-white/10 py-6 reveal transition-delay-400">
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-blue group-hover:scale-110 transition-transform">6+ Years</div>
                         <div class="text-xs text-gray-500 uppercase tracking-wide">Experience</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-neon-purple">1 Cr+</div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-purple group-hover:scale-110 transition-transform">1 Cr+</div>
                         <div class="text-xs text-gray-500 uppercase tracking-wide">Savings Generated</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-neon-blue">190+</div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-blue group-hover:scale-110 transition-transform">190+</div>
                         <div class="text-xs text-gray-500 uppercase tracking-wide">Assets Delivered</div>
                     </div>
-                    <div class="text-center">
-                        <div class="text-2xl font-bold text-neon-purple">89L+</div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-purple group-hover:scale-110 transition-transform">89L+</div>
                         <div class="text-xs text-gray-500 uppercase tracking-wide">Value Created</div>
                     </div>
                 </div>
 
-                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-8">
-                    <a href="#showreel-2026" class="btn-glass px-6 py-2.5 rounded-full text-sm font-medium text-white flex items-center justify-center gap-2 group">
-                        <i class="fas fa-play text-xs text-neon-blue group-hover:text-white transition-colors"></i> 
-                        Watch Showreel
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-8 reveal transition-delay-500">
+                    <a href="#portfolio-start" class="btn-glass px-6 py-2.5 rounded-full text-sm font-medium text-white flex items-center justify-center gap-2 group">
+                        <i class="fas fa-arrow-down text-xs text-neon-blue group-hover:text-white transition-colors"></i> 
+                        Portfolio
                     </a>
                     <a href="mailto:naazeam@gmail.com" class="px-6 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white border border-transparent hover:border-white/10 transition-all">
                         Get in Touch
@@ -217,10 +301,12 @@
     </section>
 
     <!-- AI Showreel 2026 Full Width -->
-    <section id="showreel-2026" class="w-full bg-black relative border-y border-white/5">
+    <section id="showreel-2026" class="w-full bg-black relative border-y border-white/5 reveal">
+        <div id="portfolio-start"></div> <!-- Anchor for button -->
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-10 bg-gradient-to-b from-dark-bg/50 via-transparent to-dark-bg/50"></div>
         <div class="w-full">
             <div class="relative w-full" style="padding-bottom: 56.25%;">
+                <div class="skeleton-loader"></div>
                 <iframe 
                     class="absolute top-0 left-0 w-full h-full"
                     src="https://drive.google.com/file/d/16AZBPswx3mWuwVmpQM7ouRg1z0rmz31X/preview?autoplay=1&mute=1" 
@@ -239,14 +325,14 @@
     <!-- Experience Section (Resume Highlights) -->
     <section id="experience" class="py-16 md:py-24 bg-card-bg/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="mb-12">
+            <div class="mb-12 reveal">
                 <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Experience & Impact</h2>
                 <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 <!-- Card 1: greytHR -->
-                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-100">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white">greytHR</h3>
                         <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2024 - Present</span>
@@ -273,7 +359,7 @@
                 </div>
 
                 <!-- Card 2: MarketStar -->
-                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-200">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white">MarketStar (Regalix)</h3>
                         <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2023 - 2024</span>
@@ -296,7 +382,7 @@
                 </div>
 
                 <!-- Card 3: Byju's -->
-                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-300">
                     <div class="flex justify-between items-start mb-4">
                         <h3 class="text-xl font-bold text-white">Byju's</h3>
                         <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2021 - 2023</span>
@@ -315,17 +401,37 @@
                 </div>
             </div>
 
-            <!-- Tech Stack Marquee -->
-            <div class="mt-16 pt-8 border-t border-white/5">
+            <!-- Tech Stack Marquee (Animated) -->
+            <div class="mt-16 pt-8 border-t border-white/5 overflow-hidden reveal">
                 <p class="text-center text-gray-500 text-xs uppercase tracking-widest mb-6">Powering The Workflow</p>
-                <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-70">
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Sora</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Runway Gen-3</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Midjourney</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">After Effects</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">n8n Automation</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Python</span>
-                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Salesforce</span>
+                <div class="marquee-container">
+                    <div class="marquee-content animate-marquee">
+                        <!-- Duplicated content for infinite scroll effect -->
+                        <div class="flex gap-8 opacity-70">
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                            <!-- Duplicates -->
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -334,7 +440,7 @@
     <!-- AI Videos Section -->
     <section id="ai-videos" class="py-16 md:py-24 bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12 reveal">
                 <div>
                     <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">AI Videos</h2>
                     <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
@@ -347,7 +453,7 @@
             </div>
 
             <!-- Load More Button -->
-            <div class="mt-12 text-center" id="load-more-container">
+            <div class="mt-12 text-center reveal" id="load-more-container">
                 <button id="load-more-btn" class="group relative px-8 py-3 bg-card-bg border border-white/10 rounded-full overflow-hidden hover:border-neon-blue/50 transition-all">
                     <span class="relative z-10 text-sm font-bold text-white group-hover:text-neon-blue transition-colors flex items-center gap-2">
                         Load More AI Experiments <i class="fas fa-chevron-down text-xs group-hover:translate-y-1 transition-transform"></i>
@@ -363,7 +469,7 @@
         <div class="absolute top-0 right-0 w-64 h-64 bg-neon-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
 
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-end justify-between mb-8 md:mb-12">
+            <div class="flex items-end justify-between mb-8 md:mb-12 reveal">
                 <div>
                     <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Product Work</h2>
                     <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
@@ -373,22 +479,24 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
                 <!-- Demo Playlist -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-100">
                     <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-list-ul text-neon-blue"></i> Demo Playlist
                     </h3>
                     <div class="video-container rounded-lg">
-                        <iframe src="https://www.youtube.com/embed/videoseries?list=PLW4GmthLLrUieT-tcTiWS7hhBpFxm-MqS" title="Demo Playlist" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/SPnfYENKZvo?list=PLW4GmthLLrUieT-tcTiWS7hhBpFxm-MqS" title="Demo Playlist" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <!-- Product Explainers -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-200">
                     <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-lightbulb text-neon-blue"></i> Product Explainers
                     </h3>
                     <div class="video-container rounded-lg">
-                        <iframe src="https://www.youtube.com/embed/videoseries?list=PLW4GmthLLrUj8T1ywjtuQbUH9nH4CPfKu" title="Product Explainers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/w6aqmU9mSL8?list=PLW4GmthLLrUj8T1ywjtuQbUH9nH4CPfKu" title="Product Explainers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -398,7 +506,7 @@
     <!-- Showreels Section -->
     <section id="showreels" class="py-16 md:py-24 bg-card-bg/30 border-t border-white/5">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-end justify-between mb-8 md:mb-12">
+            <div class="flex items-end justify-between mb-8 md:mb-12 reveal">
                 <div>
                     <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Showreels & Games</h2>
                     <div class="h-1 w-16 md:w-20 bg-neon-purple rounded-full"></div>
@@ -407,33 +515,36 @@
 
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
                 <!-- Motion Graphics -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-100">
                     <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-film text-neon-purple"></i> Motion Graphics Showreel
                     </h3>
                     <div class="video-container rounded-lg">
+                         <div class="skeleton-loader"></div>
                         <iframe src="https://www.youtube.com/embed/rflC-aEzxCc" title="Motion Graphics Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
 
                 <!-- Animation -->
-                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-200">
                     <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
                         <i class="fas fa-cube text-neon-purple"></i> Animation Showreel
                     </h3>
                     <div class="video-container rounded-lg">
+                        <div class="skeleton-loader"></div>
                         <iframe src="https://www.youtube.com/embed/EqVfto4uJVc" title="Animation Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
 
             <!-- Game Promo (Shorts) -->
-            <div class="max-w-xs md:max-w-md mx-auto">
+            <div class="max-w-xs md:max-w-md mx-auto reveal">
                 <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
                     <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2 justify-center">
                         <i class="fas fa-gamepad text-neon-blue"></i> Game Promo
                     </h3>
                     <div class="video-container shorts-container rounded-lg">
+                        <div class="skeleton-loader"></div>
                         <iframe src="https://www.youtube.com/embed/LDzINZo_Vw0" title="Game Promo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                     </div>
                 </div>
@@ -442,17 +553,17 @@
     </section>
 
     <!-- Footer -->
-    <footer id="contact" class="py-12 bg-black border-t border-white/10">
+    <footer id="contact" class="py-12 bg-black border-t border-white/10 reveal">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
             <h2 class="text-2xl md:text-3xl font-display font-bold mb-6">Let's Create Something <span class="text-neon-blue">Cool</span></h2>
             <div class="flex space-x-6 mb-8">
-                <a href="https://linkedin.com/in/nazim-mansuri-5a6960141" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all">
+                <a href="https://linkedin.com/in/nazim-mansuri-5a6960141" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all transform hover:scale-110">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
-                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-purple hover:text-white transition-all">
+                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-purple hover:text-white transition-all transform hover:scale-110">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="mailto:naazeam@gmail.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                <a href="mailto:naazeam@gmail.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all transform hover:scale-110">
                     <i class="fas fa-envelope"></i>
                 </a>
             </div>
@@ -480,19 +591,19 @@
         let displayCount = window.innerWidth < 768 ? 2 : 3; // 2 on mobile, 3 on desktop
         
         function renderVideos(limit) {
-            // Clear current list to prevent duplicates if re-rendering (optional optimization)
             aiGrid.innerHTML = '';
             
             // Loop through data
             aiVideos.forEach((video, index) => {
-                // If index is less than limit OR if we are showing all
                 if (index < limit) {
                     const card = document.createElement('div');
-                    card.className = 'video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 flex flex-col h-full animate-fade-in';
+                    card.className = 'video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 flex flex-col h-full animate-fade-in reveal';
                     
+                    // Added skeleton loader here
                     card.innerHTML = `
                         <div class="video-container bg-gray-900">
-                            <iframe src="https://drive.google.com/file/d/${video.id}/preview" allow="autoplay"></iframe>
+                             <div class="skeleton-loader"></div>
+                            <iframe src="https://drive.google.com/file/d/${video.id}/preview" allow="autoplay" onload="this.style.opacity=1; this.previousElementSibling.style.display='none';"></iframe>
                         </div>
                         <div class="p-6 flex-1 flex flex-col">
                             <div class="flex items-center gap-2 mb-2">
@@ -509,48 +620,76 @@
                 }
             });
 
-            // Hide button if all videos are shown
             if (limit >= aiVideos.length) {
                 loadMoreContainer.style.display = 'none';
             }
+            
+            // Re-trigger observer for new elements
+            setupObserver();
         }
 
-        // Initial Render
-        renderVideos(displayCount);
-
-        // Click Event for "See More"
-        loadMoreBtn.addEventListener('click', () => {
-            renderVideos(aiVideos.length); // Show ALL
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('preloader');
+            const progress = document.getElementById('loader-progress');
+            
+            progress.style.width = '100%';
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 800);
         });
 
-        // Resize Listener (Optional: Resets view on major resize if needed, but keeping it simple for now)
-        // window.addEventListener('resize', () => { ... });
+        // Intersection Observer for Scroll Animations
+        function setupObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
 
-        // Mobile Menu Toggle
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Initial Setup
+        renderVideos(displayCount);
+        setupObserver();
+
+        loadMoreBtn.addEventListener('click', () => {
+            renderVideos(aiVideos.length);
+        });
+
+        // Mobile Menu Logic
         const btn = document.getElementById('mobile-menu-btn');
         const menu = document.getElementById('mobile-menu');
 
         btn.addEventListener('click', () => {
-            menu.classList.toggle('hidden');
+            const isHidden = menu.classList.contains('pointer-events-none');
+            if (isHidden) {
+                menu.classList.remove('hidden', 'pointer-events-none', 'opacity-0', '-translate-y-2');
+            } else {
+                menu.classList.add('pointer-events-none', 'opacity-0', '-translate-y-2');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
         });
 
-        // Smooth Scroll
+        // Smooth Scroll & Navbar
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
-                // Close mobile menu if open
-                if (!menu.classList.contains('hidden')) {
-                    menu.classList.add('hidden');
-                }
+                menu.classList.add('pointer-events-none', 'opacity-0', '-translate-y-2');
+                setTimeout(() => menu.classList.add('hidden'), 300);
             });
         });
 
-        // Navbar Scroll Effect
         window.addEventListener('scroll', () => {
-            const nav = document.querySelector('nav');
+            const nav = document.getElementById('navbar');
             if (window.scrollY > 50) {
                 nav.classList.add('shadow-lg', 'bg-dark-bg/95');
             } else {
