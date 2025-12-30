@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nazim | Product Marketer & Creator</title>
+    <title>Nazim | Product Marketer & AI Creative Technologist</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script>
@@ -15,6 +15,7 @@
                         'neon-purple': '#bc13fe',
                         'dark-bg': '#0a0a0a',
                         'card-bg': '#121212',
+                        'card-hover': '#1a1a1a',
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
@@ -39,12 +40,13 @@
             }
         }
     </script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
     <style>
         body {
             background-color: #0a0a0a;
             color: #ffffff;
             overflow-x: hidden;
+            scroll-behavior: smooth;
         }
         
         .gradient-text {
@@ -113,6 +115,16 @@
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
+
+        /* Experience Card Styles */
+        .exp-card {
+            border-left: 2px solid #333;
+            transition: border-color 0.3s ease;
+        }
+        .exp-card:hover {
+            border-left-color: #00f3ff;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.05) 0%, transparent 100%);
+        }
     </style>
 </head>
 <body class="custom-scrollbar font-sans antialiased">
@@ -122,23 +134,33 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <div class="flex-shrink-0">
-                    <span class="font-display font-bold text-2xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></span>
+                    <a href="#home" class="font-display font-bold text-2xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></a>
                 </div>
                 <!-- Mobile Menu Button -->
                 <div class="md:hidden">
-                    <button class="text-white hover:text-neon-blue focus:outline-none">
+                    <button id="mobile-menu-btn" class="text-white hover:text-neon-blue focus:outline-none">
                         <i class="fas fa-bars text-xl"></i>
                     </button>
                 </div>
                 <div class="hidden md:block">
-                    <div class="ml-10 flex items-baseline space-x-8">
+                    <div class="ml-10 flex items-baseline space-x-6">
                         <a href="#home" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
-                        <a href="#showreel-2026" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreel 2026</a>
+                        <a href="#experience" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Experience</a>
+                        <a href="#showreel-2026" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreel</a>
                         <a href="#ai-videos" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">AI Videos</a>
-                        <a href="#showreels" class="hover:text-neon-purple transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreels</a>
+                        <a href="#product-work" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Product Work</a>
                         <a href="#contact" class="btn-glass px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider">Contact</a>
                     </div>
                 </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 absolute w-full border-b border-white/10">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#experience" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
+                <a href="#ai-videos" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">AI Videos</a>
+                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
             </div>
         </div>
     </nav>
@@ -148,21 +170,41 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
             <div class="animate-slide-up opacity-0" style="animation-delay: 0.2s;">
                 <h2 class="text-neon-blue font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Portfolio</h2>
-                <h1 class="text-4xl md:text-8xl font-display font-bold mb-6 tracking-tight leading-tight">
+                <h1 class="text-4xl md:text-7xl font-display font-bold mb-6 tracking-tight leading-tight">
                     I'm Nazim<br>
-                    <span class="gradient-text">Product Marketer</span>
+                    <span class="gradient-text">Product Marketer</span><br>
+                    <span class="text-2xl md:text-4xl text-white font-light">& AI Creative Technologist</span>
                 </h1>
-                <p class="mt-4 max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light px-4">
-                    Handling GTM strategies and creating <span class="text-white font-semibold">cool stuff</span> that converts.
+                <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-gray-400 font-light px-4">
+                    GTM & Demo Architect specializing in converting video, demos, and creative workflows into <span class="text-white font-semibold">scalable revenue systems</span>.
                 </p>
                 
-                <!-- Redesigned Smaller, Transparent Buttons -->
+                <!-- Stats Banner -->
+                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-b border-white/10 py-6">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-neon-blue">6+ Years</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Experience</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-neon-purple">1 Cr+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Savings Generated</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-neon-blue">190+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Assets Delivered</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-neon-purple">89L+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Value Created</div>
+                    </div>
+                </div>
+
                 <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-8">
                     <a href="#showreel-2026" class="btn-glass px-6 py-2.5 rounded-full text-sm font-medium text-white flex items-center justify-center gap-2 group">
                         <i class="fas fa-play text-xs text-neon-blue group-hover:text-white transition-colors"></i> 
                         Watch Showreel
                     </a>
-                    <a href="mailto:contact@nazim.com" class="px-6 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white border border-transparent hover:border-white/10 transition-all">
+                    <a href="mailto:naazeam@gmail.com" class="px-6 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white border border-transparent hover:border-white/10 transition-all">
                         Get in Touch
                     </a>
                 </div>
@@ -174,7 +216,7 @@
         </div>
     </section>
 
-    <!-- NEW: AI Showreel 2026 Full Width -->
+    <!-- AI Showreel 2026 Full Width -->
     <section id="showreel-2026" class="w-full bg-black relative border-y border-white/5">
         <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-10 bg-gradient-to-b from-dark-bg/50 via-transparent to-dark-bg/50"></div>
         <div class="w-full">
@@ -194,6 +236,101 @@
         </div>
     </section>
 
+    <!-- Experience Section (Resume Highlights) -->
+    <section id="experience" class="py-16 md:py-24 bg-card-bg/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12">
+                <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Experience & Impact</h2>
+                <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Card 1: greytHR -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">greytHR</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2024 - Present</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Product Marketing Manager | AI Strategy Lead</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Built 3-day Agile workflow using Custom GPT agents.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Delivered <strong>190+ GTM assets</strong> valued at 89L+.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Eliminated <strong>1 Cr in outsourcing</strong> costs.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Produced 10 broadcast ads in 48 hrs using Sora & Veo.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: MarketStar -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">MarketStar (Regalix)</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2023 - 2024</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Specialist Motion Graphic Lead</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Led motion design for enterprise tech clients.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Collapsed 5-layer approval chain into direct pipeline.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Rescued delayed 14-day delivery in just <strong>38 hours</strong>.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Byju's -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">Byju's</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2021 - 2023</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Associate - Video & Animation</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Produced high-volume broadcast motion content.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Built 2.5D rigging system (30-min setup) adopted as studio benchmark.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tech Stack Marquee -->
+            <div class="mt-16 pt-8 border-t border-white/5">
+                <p class="text-center text-gray-500 text-xs uppercase tracking-widest mb-6">Powering The Workflow</p>
+                <div class="flex flex-wrap justify-center gap-4 md:gap-8 opacity-70">
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Sora</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Runway Gen-3</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Midjourney</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">After Effects</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">n8n Automation</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Python</span>
+                    <span class="px-3 py-1 border border-white/10 rounded-full text-sm">Salesforce</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- AI Videos Section -->
     <section id="ai-videos" class="py-16 md:py-24 bg-dark-bg">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -207,6 +344,53 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="ai-video-grid">
                 <!-- Content injected via JS -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="mt-12 text-center" id="load-more-container">
+                <button id="load-more-btn" class="group relative px-8 py-3 bg-card-bg border border-white/10 rounded-full overflow-hidden hover:border-neon-blue/50 transition-all">
+                    <span class="relative z-10 text-sm font-bold text-white group-hover:text-neon-blue transition-colors flex items-center gap-2">
+                        Load More AI Experiments <i class="fas fa-chevron-down text-xs group-hover:translate-y-1 transition-transform"></i>
+                    </span>
+                    <div class="absolute inset-0 bg-neon-blue/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Explainers & Demos Section -->
+    <section id="product-work" class="py-16 md:py-24 bg-dark-bg relative border-t border-white/5">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-neon-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between mb-8 md:mb-12">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Product Work</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
+                </div>
+                <p class="hidden md:block text-gray-500 text-sm">Strategies & Demos</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                <!-- Demo Playlist -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-list-ul text-neon-blue"></i> Demo Playlist
+                    </h3>
+                    <div class="video-container rounded-lg">
+                        <iframe src="https://www.youtube.com/embed/videoseries?list=PLW4GmthLLrUieT-tcTiWS7hhBpFxm-MqS" title="Demo Playlist" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Product Explainers -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-neon-blue"></i> Product Explainers
+                    </h3>
+                    <div class="video-container rounded-lg">
+                        <iframe src="https://www.youtube.com/embed/videoseries?list=PLW4GmthLLrUj8T1ywjtuQbUH9nH4CPfKu" title="Product Explainers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -262,22 +446,22 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
             <h2 class="text-2xl md:text-3xl font-display font-bold mb-6">Let's Create Something <span class="text-neon-blue">Cool</span></h2>
             <div class="flex space-x-6 mb-8">
-                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all">
+                <a href="https://linkedin.com/in/nazim-mansuri-5a6960141" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all">
                     <i class="fab fa-linkedin-in"></i>
                 </a>
                 <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-purple hover:text-white transition-all">
                     <i class="fab fa-instagram"></i>
                 </a>
-                <a href="mailto:your@email.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
+                <a href="mailto:naazeam@gmail.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all">
                     <i class="fas fa-envelope"></i>
                 </a>
             </div>
-            <p class="text-gray-600 text-sm">© 2024 Nazim. All Rights Reserved.</p>
+            <p class="text-gray-600 text-sm">© 2024 Nazim Mansuri. All Rights Reserved.</p>
         </div>
     </footer>
 
     <script>
-        // Data for AI Videos (Google Drive)
+        // Data for AI Videos
         const aiVideos = [
             { title: "Why SO Obsessed", id: "1r5cc38U9Kav_8dOU-D-fC0dDTg7eifLA", desc: "Deep dive into market trends" },
             { title: "Expense on the Go", id: "1QKEcW8JRFddWkpXhOxDPVmpTvHGiLhEw", desc: "Mobile-first financial solutions" },
@@ -289,29 +473,65 @@
         ];
 
         const aiGrid = document.getElementById('ai-video-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadMoreContainer = document.getElementById('load-more-container');
 
-        // Render AI Videos
-        aiVideos.forEach((video, index) => {
-            const card = document.createElement('div');
-            card.className = 'video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 flex flex-col h-full animate-slide-up opacity-0';
-            card.style.animationDelay = `${0.1 * index}s`;
+        // Logic for "See More" behavior
+        let displayCount = window.innerWidth < 768 ? 2 : 3; // 2 on mobile, 3 on desktop
+        
+        function renderVideos(limit) {
+            // Clear current list to prevent duplicates if re-rendering (optional optimization)
+            aiGrid.innerHTML = '';
             
-            card.innerHTML = `
-                <div class="video-container bg-gray-900">
-                    <iframe src="https://drive.google.com/file/d/${video.id}/preview" allow="autoplay"></iframe>
-                </div>
-                <div class="p-6 flex-1 flex flex-col">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-neon-blue/10 text-neon-blue uppercase tracking-wide">AI Video</span>
-                    </div>
-                    <h3 class="text-xl font-bold text-white mb-2">${video.title}</h3>
-                    <p class="text-gray-400 text-sm mb-4 flex-1">${video.desc}</p>
-                    <a href="https://drive.google.com/file/d/${video.id}/view" target="_blank" class="text-sm font-semibold text-white hover:text-neon-blue transition-colors flex items-center gap-2 mt-auto">
-                        View Original <i class="fas fa-external-link-alt text-xs"></i>
-                    </a>
-                </div>
-            `;
-            aiGrid.appendChild(card);
+            // Loop through data
+            aiVideos.forEach((video, index) => {
+                // If index is less than limit OR if we are showing all
+                if (index < limit) {
+                    const card = document.createElement('div');
+                    card.className = 'video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 flex flex-col h-full animate-fade-in';
+                    
+                    card.innerHTML = `
+                        <div class="video-container bg-gray-900">
+                            <iframe src="https://drive.google.com/file/d/${video.id}/preview" allow="autoplay"></iframe>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-neon-blue/10 text-neon-blue uppercase tracking-wide">AI Video</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">${video.title}</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex-1">${video.desc}</p>
+                            <a href="https://drive.google.com/file/d/${video.id}/view" target="_blank" class="text-sm font-semibold text-white hover:text-neon-blue transition-colors flex items-center gap-2 mt-auto">
+                                View Original <i class="fas fa-external-link-alt text-xs"></i>
+                            </a>
+                        </div>
+                    `;
+                    aiGrid.appendChild(card);
+                }
+            });
+
+            // Hide button if all videos are shown
+            if (limit >= aiVideos.length) {
+                loadMoreContainer.style.display = 'none';
+            }
+        }
+
+        // Initial Render
+        renderVideos(displayCount);
+
+        // Click Event for "See More"
+        loadMoreBtn.addEventListener('click', () => {
+            renderVideos(aiVideos.length); // Show ALL
+        });
+
+        // Resize Listener (Optional: Resets view on major resize if needed, but keeping it simple for now)
+        // window.addEventListener('resize', () => { ... });
+
+        // Mobile Menu Toggle
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
         });
 
         // Smooth Scroll
@@ -321,6 +541,10 @@
                 document.querySelector(this.getAttribute('href')).scrollIntoView({
                     behavior: 'smooth'
                 });
+                // Close mobile menu if open
+                if (!menu.classList.contains('hidden')) {
+                    menu.classList.add('hidden');
+                }
             });
         });
 
