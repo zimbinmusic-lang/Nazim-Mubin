@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nazim | Product Marketer & AI Creative Technologist</title>
+    
+    <!-- SEO & Social Media Meta Tags -->
+    <meta name="description" content="GTM & Demo Architect specializing in converting video, demos, and creative workflows into scalable revenue systems.">
+    
+    <!-- Google / Search Engine Tags -->
+    <meta itemprop="name" content="Nazim | Product Marketer & AI Creative Technologist">
+    <meta itemprop="description" content="GTM & Demo Architect specializing in converting video, demos, and creative workflows into scalable revenue systems.">
+    <meta itemprop="image" content="https://zimbinmusic-lang.github.io/Nazim-Mubin/portfolio.jpg?v=2">
+    
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Nazim | Product Marketer & AI Creative Technologist">
+    <meta property="og:description" content="GTM & Demo Architect specializing in converting video, demos, and creative workflows into scalable revenue systems.">
+    <!-- Updated Absolute Image URL with cache buster -->
+    <meta property="og:image" content="https://zimbinmusic-lang.github.io/Nazim-Mubin/portfolio.jpg?v=2">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Nazim | Product Marketer & AI Creative Technologist">
+    <meta property="twitter:description" content="GTM & Demo Architect specializing in converting video, demos, and creative workflows into scalable revenue systems.">
+    <!-- Updated Absolute Image URL with cache buster -->
+    <meta property="twitter:image" content="https://zimbinmusic-lang.github.io/Nazim-Mubin/portfolio.jpg?v=2">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-blue': '#00f3ff',
+                        'neon-purple': '#bc13fe',
+                        'dark-bg': '#0a0a0a',
+                        'card-bg': '#121212',
+                        'card-hover': '#1a1a1a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Oswald', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-out',
+                        'slide-up': 'slideUp 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 1.5s infinite linear',
+                        'marquee': 'marquee 25s linear infinite',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        shimmer: {
+                            '0%': { backgroundPosition: '-1000px 0' },
+                            '100%': { backgroundPosition: '1000px 0' }
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #ffffff;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, #00f3ff, #bc13fe);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-bg {
+            background: radial-gradient(circle at 50% 50%, rgba(188, 19, 254, 0.1) 0%, rgba(10, 10, 10, 0) 50%);
+        }
+
+        .video-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px -10px rgba(0, 243, 255, 0.2);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* Video Aspect Ratio Hack */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 */
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+            z-index: 10; /* Ensure on top of skeleton */
+        }
+        
+        /* Skeleton Loader Style */
+        .skeleton-loader {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to right, #1a1a1a 8%, #2a2a2a 18%, #1a1a1a 33%);
+            background-size: 1000px 100%;
+            animation: shimmer 1.5s infinite linear;
+            z-index: 0; /* Behind iframe */
+        }
+
+        .shorts-container {
+            padding-bottom: 177.77%; /* 9:16 */
+        }
+
+        /* Transparent Button Styles */
+        .btn-glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .btn-glass:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Experience Card Styles */
+        .exp-card {
+            border-left: 2px solid #333;
+            transition: all 0.3s ease;
+        }
+        .exp-card:hover {
+            border-left-color: #00f3ff;
+            background: linear-gradient(90deg, rgba(0, 243, 255, 0.05) 0%, transparent 100%);
+            transform: translateX(5px);
+        }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Preloader */
+        #preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+        }
+        .loader-content {
+            text-align: center;
+        }
+        .loader-bar {
+            width: 0%;
+            height: 2px;
+            background: #00f3ff;
+            margin-top: 10px;
+            transition: width 1s ease-in-out;
+        }
+
+        /* Marquee styles */
+        .marquee-container {
+            overflow: hidden;
+            position: relative;
+            width: 100%;
+        }
+        .marquee-content {
+            display: flex;
+            width: 200%; /* Important for seamless loop */
+        }
+        .marquee-item {
+            flex: 0 0 auto;
+            margin-right: 2rem;
+        }
+    </style>
+</head>
+<body class="custom-scrollbar font-sans antialiased">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-content">
+            <h1 class="font-display font-bold text-4xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></h1>
+            <div class="loader-bar" id="loader-progress"></div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 bg-dark-bg/80 backdrop-blur-md border-b border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex-shrink-0">
+                    <a href="#home" class="font-display font-bold text-2xl tracking-wider text-white">NAZIM<span class="text-neon-blue">.</span></a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="text-white hover:text-neon-blue focus:outline-none p-2">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#home" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#experience" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Experience</a>
+                        <a href="#showreel-2026" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Showreel</a>
+                        <a href="#ai-videos" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">AI Videos</a>
+                        <a href="#product-work" class="hover:text-neon-blue transition-colors px-3 py-2 rounded-md text-sm font-medium">Product Work</a>
+                        <a href="#contact" class="btn-glass px-4 py-2 rounded-full text-xs font-medium uppercase tracking-wider">Contact</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/95 absolute w-full border-b border-white/10 transition-all duration-300 ease-in-out opacity-0 -translate-y-2 pointer-events-none">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#experience" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experience</a>
+                <a href="#ai-videos" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">AI Videos</a>
+                <a href="#contact" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center hero-bg pt-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="reveal active transition-delay-200">
+                <h2 class="text-neon-blue font-bold tracking-[0.2em] text-xs md:text-sm uppercase mb-4">Portfolio</h2>
+                <h1 class="text-4xl md:text-7xl font-display font-bold mb-6 tracking-tight leading-tight">
+                    I'm Nazim<br>
+                    <span class="gradient-text">Product Marketer</span><br>
+                    <span class="text-2xl md:text-4xl text-white font-light">& AI Creative Technologist</span>
+                </h1>
+                <p class="mt-4 max-w-3xl mx-auto text-lg md:text-xl text-gray-400 font-light px-4">
+                    GTM & Demo Architect specializing in converting video, demos, and creative workflows into <span class="text-white font-semibold">scalable revenue systems</span>.
+                </p>
+                
+                <!-- Stats Banner -->
+                <div class="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto border-t border-b border-white/10 py-6 reveal transition-delay-400">
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-blue group-hover:scale-110 transition-transform">6+ Years</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Experience</div>
+                    </div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-purple group-hover:scale-110 transition-transform">1 Cr+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Savings Generated</div>
+                    </div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-blue group-hover:scale-110 transition-transform">190+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Assets Delivered</div>
+                    </div>
+                    <div class="text-center group cursor-default">
+                        <div class="text-2xl font-bold text-neon-purple group-hover:scale-110 transition-transform">89L+</div>
+                        <div class="text-xs text-gray-500 uppercase tracking-wide">Value Created</div>
+                    </div>
+                </div>
+
+                <div class="mt-10 flex flex-col sm:flex-row justify-center gap-4 px-8 reveal transition-delay-500">
+                    <a href="#ai-videos" class="btn-glass px-6 py-2.5 rounded-full text-sm font-medium text-white flex items-center justify-center gap-2 group">
+                        <i class="fas fa-arrow-down text-xs text-neon-blue group-hover:text-white transition-colors"></i> 
+                        Portfolio
+                    </a>
+                    <a href="mailto:naazeam@gmail.com" class="px-6 py-2.5 rounded-full text-sm font-medium text-gray-400 hover:text-white border border-transparent hover:border-white/10 transition-all">
+                        Get in Touch
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Animated Background Elements -->
+            <div class="absolute top-1/2 left-1/4 w-48 h-48 md:w-72 md:h-72 bg-neon-blue/20 rounded-full blur-[80px] md:blur-[100px] -z-10 animate-pulse-slow"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 md:w-96 md:h-96 bg-neon-purple/10 rounded-full blur-[80px] md:blur-[120px] -z-10 animate-pulse-slow" style="animation-delay: 2s;"></div>
+        </div>
+    </section>
+
+    <!-- AI Showreel 2026 Full Width -->
+    <section id="showreel-2026" class="w-full bg-black relative border-y border-white/5 reveal">
+        <div id="portfolio-start"></div> <!-- Anchor for button -->
+        <div class="absolute top-0 left-0 w-full h-full pointer-events-none z-10 bg-gradient-to-b from-dark-bg/50 via-transparent to-dark-bg/50"></div>
+        <div class="w-full">
+            <div class="relative w-full" style="padding-bottom: 56.25%;">
+                <div class="skeleton-loader"></div>
+                <iframe 
+                    class="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/IipVhxx5nNw?autoplay=1&mute=1&loop=1&playlist=IipVhxx5nNw" 
+                    frameborder="0" 
+                    allow="autoplay; encrypted-media" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+        <div class="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-20">
+            <h2 class="text-2xl md:text-4xl font-display font-bold text-white drop-shadow-lg">AI Showreel 2026</h2>
+            <p class="text-neon-blue text-sm font-mono tracking-wider">FUTURE VISUALS</p>
+        </div>
+    </section>
+
+    <!-- Experience Section (Resume Highlights) -->
+    <section id="experience" class="py-16 md:py-24 bg-card-bg/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="mb-12 reveal">
+                <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Experience & Impact</h2>
+                <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Card 1: greytHR -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-100">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">greytHR</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2024 - Present</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Product Marketing Manager | AI Strategy Lead</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Built 3-day Agile workflow using Custom GPT agents.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Delivered <strong>190+ GTM assets</strong> valued at 89L+.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Eliminated <strong>1 Cr in outsourcing</strong> costs.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Produced 10 broadcast ads in 48 hrs using Sora & Veo.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 2: MarketStar -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-200">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">MarketStar (Regalix)</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2023 - 2024</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Specialist Motion Graphic Lead</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Led motion design for enterprise tech clients.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Collapsed 5-layer approval chain into direct pipeline.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Rescued delayed 14-day delivery in just <strong>38 hours</strong>.</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Card 3: Byju's -->
+                <div class="exp-card p-6 bg-card-bg rounded-r-xl reveal transition-delay-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="text-xl font-bold text-white">Byju's</h3>
+                        <span class="text-xs text-gray-500 bg-white/5 px-2 py-1 rounded">2021 - 2023</span>
+                    </div>
+                    <p class="text-neon-blue text-sm font-semibold mb-3">Associate - Video & Animation</p>
+                    <ul class="space-y-3 text-sm text-gray-400">
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Produced high-volume broadcast motion content.</span>
+                        </li>
+                        <li class="flex gap-2">
+                            <i class="fas fa-check text-neon-purple mt-1"></i>
+                            <span>Built 2.5D rigging system (30-min setup) adopted as studio benchmark.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tech Stack Marquee (Animated) -->
+            <div class="mt-16 pt-8 border-t border-white/5 overflow-hidden reveal">
+                <p class="text-center text-gray-500 text-xs uppercase tracking-widest mb-6">Powering The Workflow</p>
+                <div class="marquee-container">
+                    <div class="marquee-content animate-marquee">
+                        <!-- Duplicated content for infinite scroll effect -->
+                        <div class="flex gap-8 opacity-70">
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                            <!-- Duplicates -->
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Sora</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Runway Gen-3</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Midjourney</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">After Effects</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">n8n Automation</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Python</span>
+                            <span class="px-4 py-2 border border-white/10 rounded-full text-sm hover:border-neon-blue hover:text-neon-blue transition-colors">Salesforce</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Videos Section -->
+    <section id="ai-videos" class="py-16 md:py-24 bg-dark-bg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-start md:items-end justify-between mb-8 md:mb-12 reveal">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">AI Videos</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
+                </div>
+                <p class="mt-2 md:mt-0 text-gray-500 text-xs md:text-sm">Experimental & Marketing Content</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8" id="ai-video-grid">
+                <!-- Content injected via JS -->
+            </div>
+
+            <!-- Load More Button -->
+            <div class="mt-12 text-center reveal" id="load-more-container">
+                <button id="load-more-btn" class="group relative px-8 py-3 bg-card-bg border border-white/10 rounded-full overflow-hidden hover:border-neon-blue/50 transition-all">
+                    <span class="relative z-10 text-sm font-bold text-white group-hover:text-neon-blue transition-colors flex items-center gap-2">
+                        Load More AI Experiments <i class="fas fa-chevron-down text-xs group-hover:translate-y-1 transition-transform"></i>
+                    </span>
+                    <div class="absolute inset-0 bg-neon-blue/5 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300 ease-out"></div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Product Explainers & Demos Section -->
+    <section id="product-work" class="py-16 md:py-24 bg-dark-bg relative border-t border-white/5">
+        <div class="absolute top-0 right-0 w-64 h-64 bg-neon-blue/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between mb-8 md:mb-12 reveal">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Product Work</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-blue rounded-full"></div>
+                </div>
+                <p class="hidden md:block text-gray-500 text-sm">Strategies & Demos</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8">
+                <!-- Demo Playlist -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-100">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-list-ul text-neon-blue"></i> Demo Playlist
+                    </h3>
+                    <div class="video-container rounded-lg">
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/SPnfYENKZvo?list=PLW4GmthLLrUieT-tcTiWS7hhBpFxm-MqS" title="Demo Playlist" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Product Explainers -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-200">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-lightbulb text-neon-blue"></i> Product Explainers
+                    </h3>
+                    <div class="video-container rounded-lg">
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/w6aqmU9mSL8?list=PLW4GmthLLrUj8T1ywjtuQbUH9nH4CPfKu" title="Product Explainers" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Showreels Section -->
+    <section id="showreels" class="py-16 md:py-24 bg-card-bg/30 border-t border-white/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-end justify-between mb-8 md:mb-12 reveal">
+                <div>
+                    <h2 class="text-2xl md:text-4xl font-display font-bold text-white mb-2">Showreels & Games</h2>
+                    <div class="h-1 w-16 md:w-20 bg-neon-purple rounded-full"></div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-8 mb-12">
+                <!-- Motion Graphics -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-100">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-film text-neon-purple"></i> Motion Graphics Showreel
+                    </h3>
+                    <div class="video-container rounded-lg">
+                         <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/rflC-aEzxCc" title="Motion Graphics Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+
+                <!-- Animation -->
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4 reveal transition-delay-200">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2">
+                        <i class="fas fa-cube text-neon-purple"></i> Animation Showreel
+                    </h3>
+                    <div class="video-container rounded-lg">
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/EqVfto4uJVc" title="Animation Showreel" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Promo (Shorts) -->
+            <div class="max-w-xs md:max-w-md mx-auto reveal">
+                <div class="video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 p-3 md:p-4">
+                    <h3 class="text-lg md:text-xl font-bold mb-4 flex items-center gap-2 justify-center">
+                        <i class="fas fa-gamepad text-neon-blue"></i> Game Promo
+                    </h3>
+                    <div class="video-container shorts-container rounded-lg">
+                        <div class="skeleton-loader"></div>
+                        <iframe src="https://www.youtube.com/embed/LDzINZo_Vw0" title="Game Promo" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact" class="py-12 bg-black border-t border-white/10 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center justify-center text-center">
+            <h2 class="text-2xl md:text-3xl font-display font-bold mb-6">Let's Create Something <span class="text-neon-blue">Cool</span></h2>
+            <div class="flex space-x-6 mb-8">
+                <a href="https://linkedin.com/in/nazim-mansuri-5a6960141" target="_blank" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-blue hover:text-black transition-all transform hover:scale-110">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+                <a href="#" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-neon-purple hover:text-white transition-all transform hover:scale-110">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="mailto:naazeam@gmail.com" class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white hover:text-black transition-all transform hover:scale-110">
+                    <i class="fas fa-envelope"></i>
+                </a>
+            </div>
+            <p class="text-gray-600 text-sm">© 2024 Nazim Mansuri. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Data for AI Videos
+        const aiVideos = [
+            { title: "Why SO Obsessed", id: "1r5cc38U9Kav_8dOU-D-fC0dDTg7eifLA", desc: "Deep dive into market trends" },
+            { title: "Expense on the Go", id: "1QKEcW8JRFddWkpXhOxDPVmpTvHGiLhEw", desc: "Mobile-first financial solutions" },
+            { title: "Expense is the Conspiracy", id: "1ST7qtRv3pEBMcuLlAGl3olyZEXneY6ms", desc: "Uncovering the hidden costs" },
+            { title: "Gabbar Knows the Expense", id: "1BRhftDNekSzY03DGRxeix9v5mZansZns", desc: "A fun take on finance management" },
+            { title: "HR Ghosted", id: "1Oi98rLfpnwK5EcuOX2MmAGCBiWc4GFGt", desc: "Recruitment struggles animated" },
+            { title: "Leave Drama", id: "1gdjoCeKEEHH2XcwHdEPAWgziOOaNs9bV", desc: "Office life chronicles" },
+            { title: "Leave on the Air", id: "1fGPXKYJChnXdWjXxGJPSfXcayEfPDKsN", desc: "Remote work culture" }
+        ];
+
+        const aiGrid = document.getElementById('ai-video-grid');
+        const loadMoreBtn = document.getElementById('load-more-btn');
+        const loadMoreContainer = document.getElementById('load-more-container');
+
+        // Logic for "See More" behavior
+        let displayCount = window.innerWidth < 768 ? 2 : 3; // 2 on mobile, 3 on desktop
+        
+        function renderVideos(limit) {
+            aiGrid.innerHTML = '';
+            
+            // Loop through data
+            aiVideos.forEach((video, index) => {
+                if (index < limit) {
+                    const card = document.createElement('div');
+                    card.className = 'video-card bg-card-bg rounded-xl overflow-hidden border border-white/5 flex flex-col h-full animate-fade-in reveal';
+                    
+                    // Added skeleton loader here
+                    card.innerHTML = `
+                        <div class="video-container bg-gray-900">
+                             <div class="skeleton-loader"></div>
+                            <iframe src="https://drive.google.com/file/d/${video.id}/preview" allow="autoplay" onload="this.style.opacity=1; this.previousElementSibling.style.display='none';"></iframe>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <div class="flex items-center gap-2 mb-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-neon-blue/10 text-neon-blue uppercase tracking-wide">AI Video</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-2">${video.title}</h3>
+                            <p class="text-gray-400 text-sm mb-4 flex-1">${video.desc}</p>
+                            <a href="https://drive.google.com/file/d/${video.id}/view" target="_blank" class="text-sm font-semibold text-white hover:text-neon-blue transition-colors flex items-center gap-2 mt-auto">
+                                View Original <i class="fas fa-external-link-alt text-xs"></i>
+                            </a>
+                        </div>
+                    `;
+                    aiGrid.appendChild(card);
+                }
+            });
+
+            if (limit >= aiVideos.length) {
+                loadMoreContainer.style.display = 'none';
+            }
+            
+            // Re-trigger observer for new elements
+            setupObserver();
+        }
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('preloader');
+            const progress = document.getElementById('loader-progress');
+            
+            progress.style.width = '100%';
+            
+            setTimeout(() => {
+                loader.style.opacity = '0';
+                loader.style.visibility = 'hidden';
+            }, 800);
+        });
+
+        // Intersection Observer for Scroll Animations
+        function setupObserver() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        }
+
+        // Initial Setup
+        renderVideos(displayCount);
+        setupObserver();
+
+        loadMoreBtn.addEventListener('click', () => {
+            renderVideos(aiVideos.length);
+        });
+
+        // Mobile Menu Logic
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            const isHidden = menu.classList.contains('pointer-events-none');
+            if (isHidden) {
+                menu.classList.remove('hidden', 'pointer-events-none', 'opacity-0', '-translate-y-2');
+            } else {
+                menu.classList.add('pointer-events-none', 'opacity-0', '-translate-y-2');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            }
+        });
+
+        // Smooth Scroll & Navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                menu.classList.add('pointer-events-none', 'opacity-0', '-translate-y-2');
+                setTimeout(() => menu.classList.add('hidden'), 300);
+            });
+        });
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-lg', 'bg-dark-bg/95');
+            } else {
+                nav.classList.remove('shadow-lg', 'bg-dark-bg/80');
+            }
+        });
+    </script>
+</body>
+</html>
